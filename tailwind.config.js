@@ -5,8 +5,8 @@ module.exports = {
     extend: {},
   },
   daisyui: {
-    themes: false,
-    darkTheme: "forest",
+    themes: ["dracula", "fantasy"],
+    darkTheme: "dracula",
     lightTheme: "fantasy",
   },
   plugins: [require("@tailwindcss/typography"), require("daisyui")],
