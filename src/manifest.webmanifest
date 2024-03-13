@@ -1,8 +1,8 @@
 {
   "name": "NotesReader",
   "short_name": "NotesReader",
-  "theme_color": "#1976d2",
-  "background_color": "#fafafa",
+  "theme_color": "#000000",
+  "background_color": "#000000",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
@@ -37,5 +37,10 @@
       "type": "image/png",
       "purpose": "maskable any"
     }
-  ]
+  ],
+  "description": "Transfer Your handwritten notes to pdf",
+  "dir": "ltr",
+  "lang": "en",
+  "orientation": "any",
+  "categories": ["education", "productivity", "ai"]
 }
