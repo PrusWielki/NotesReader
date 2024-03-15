@@ -1,0 +1,26 @@
+<div class="w-full fixed top-0 font-serif z-10 backdrop-blur-md bg-transparent">
+  <div class="navbar max-w-screen-xl mx-auto px-4">
+    <div class="navbar-start">
+      <a href="/" class="btn btn-ghost text-xl font-normal">Notes Reader</a>
+    </div>
+
+    <div class="navbar-end gap-4">
+      <button
+        data-toggle-theme="dracula,fantasy"
+        data-act-class="ACTIVECLASS"
+        class="flex items-center"
+      >
+        <input
+          type="checkbox"
+          class="toggle toggle-sm"
+          (checked)="getTheme()"
+        />
+      </button>
+      <a
+        href="/login"
+        class="btn btn-outline btn-secondary btn-sm text-primary-content"
+        >Login</a
+      >
+    </div>
+  </div>
+</div>
