@@ -8,8 +8,4 @@ import { NavbarComponent } from '../navbar/navbar.component';
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
 })
-export class HomePageComponent {
-  public GetStartedOnClick() {
-    alert('xd');
-  }
-}
+export class HomePageComponent {}
