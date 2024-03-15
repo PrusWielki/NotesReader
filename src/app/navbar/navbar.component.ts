@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
-export class NavbarComponent {}
+export class NavbarComponent {
+  public getTheme() {
+    const theme = localStorage.getItem('theme') || 'fantasy';
+    console.log('theme');
+    return theme === 'fantasy';
+  }
+}
