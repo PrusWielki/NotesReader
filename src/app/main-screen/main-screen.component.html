@@ -1,12 +1,8 @@
 <div class="w-full h-[100dvh]">
   <div class="max-w-screen-xl mx-auto px-4 py-20">
-    <div class="flex flex-row flex-wrap gap-8">
+    <div class="flex flex-row flex-wrap gap-8 justify-center sm:justify-start">
       @for (card of cards; track card.text) {
-      <app-note-card
-        [text]="
-          'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt, beatae voluptatibus. Officia at voluptates, facere animi minima, voluptatum explicabo molestiae repellat expedita eius libero quaerat aut reprehenderit nisi autem assumenda!'
-        "
-      />
+      <app-note-card class="w-full sm:w-96" [text]="card.text" />
       } @empty {
       <li>There are no items.</li>
       }
