@@ -1,8 +1,12 @@
 <div class="w-full h-[100dvh]">
   <div class="max-w-screen-xl mx-auto px-4 py-20">
-    <div class="flex flex-row flex-wrap">
+    <div class="flex flex-row flex-wrap gap-8">
       @for (card of cards; track card.text) {
-      <app-note-card />
+      <app-note-card
+        [text]="
+          'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt, beatae voluptatibus. Officia at voluptates, facere animi minima, voluptatum explicabo molestiae repellat expedita eius libero quaerat aut reprehenderit nisi autem assumenda!'
+        "
+      />
       } @empty {
       <li>There are no items.</li>
       }
