@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { NoteCardComponent } from '../note-card/note-card.component';
 import { NavbarComponent } from '../navbar/navbar.component';
+import { MainNavbarComponent } from '../main-navbar/main-navbar.component';
 
 @Component({
   selector: 'app-main-screen',
   standalone: true,
-  imports: [NoteCardComponent, NavbarComponent],
+  imports: [NoteCardComponent, MainNavbarComponent],
   templateUrl: './main-screen.component.html',
   styleUrl: './main-screen.component.scss',
 })
