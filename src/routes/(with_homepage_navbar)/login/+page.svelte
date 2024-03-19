@@ -1,6 +1,6 @@
 
 <div class="w-full font-montserrat min-h-[100lvh] flex items-center">
-  <form class="max-w-md w-full mx-auto px-4 flex flex-col items-center gap-4">
+  <form class="max-w-md w-10/12 sm:w-full mx-auto px-4 flex flex-col items-center gap-4">
     <h1 class="text-center text-2xl font-bold sm:text-3xl mb-2">
       Welcome back
     </h1>

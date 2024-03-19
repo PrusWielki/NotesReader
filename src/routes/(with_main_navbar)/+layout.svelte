@@ -12,9 +12,9 @@
     <div class="navbar-end gap-4">
     <ThemePicker class=""/>
       <a
-        href="/login"
+        href="/logout"
         class="btn btn-outline btn-secondary btn-sm text-primary-content"
-        >Login</a
+        >Logout</a
       >
     </div>
   </div>
