@@ -1,6 +1,6 @@
 
-<div class="w-full font-serif min-h-[100lvh] flex items-center">
-  <div class="max-w-screen-xl mx-auto px-4 flex flex-col items-center gap-4">
+<div class="w-full font-montserrat min-h-[100lvh] flex items-center">
+  <form class="max-w-screen-xl mx-auto px-4 flex flex-col items-center gap-4">
     <h1 class="text-center text-xl font-bold sm:text-3xl mb-2">
       Glad to see You
     </h1>
@@ -108,5 +108,5 @@
         ></path>
       </svg>
     </button>
-  </div>
+  </form>
 </div>

@@ -1,6 +1,6 @@
 
-<div class="w-full font-serif min-h-[100lvh] flex items-center">
-  <div class="max-w-screen-xl mx-auto px-4 flex flex-col items-center gap-4">
+<div class="w-full font-montserrat min-h-[100lvh] flex items-center">
+  <form class="max-w-screen-xl mx-auto px-4 flex flex-col items-center gap-4">
     <h1 class="text-center text-2xl font-bold sm:text-3xl mb-2">
       Welcome back
     </h1>
@@ -20,7 +20,7 @@
           d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z"
         />
       </svg>
-      <input type="text" class="grow text-lg" placeholder="Email" />
+      <input type="text" class="grow text-lg" placeholder="Email" autocomplete="off" />
     </label>
     <label
       class="input input-bordered flex items-center focus-within:input-primary gap-2"
@@ -44,7 +44,7 @@
         value=""
       />
     </label>
-    <button class="btn w-full btn-primary text-lg">Login</button>
+    <button type="submit" class="btn w-full btn-primary text-lg">Login</button>
     <p>Or</p>
     <button class="btn w-full btn-neutral btn-outline gap-1 sm:gap-2">
       <p
@@ -79,5 +79,5 @@
         ></path>
       </svg>
     </button>
-  </div>
+  </form>
 </div>

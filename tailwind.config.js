@@ -2,7 +2,14 @@
 module.exports = {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 	theme: {
-		extend: {}
+		extend: {
+			fontFamily: {
+				manrope: 'Manrope',
+				inter: 'Inter',
+				montserrat: 'Montserrat',
+				poppins: 'Poppins'
+			}
+		}
 	},
 	daisyui: {
 		themes: ['light', 'dark', 'emerald', 'dim', 'nord', 'dracula', 'fantasy'],
