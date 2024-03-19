@@ -1,16 +1,16 @@
 
 <div class="w-full font-montserrat min-h-[100lvh] flex items-center">
-  <form class="max-w-screen-xl mx-auto px-4 flex flex-col items-center gap-4">
+  <form class="max-w-md mx-auto px-4 flex flex-col items-center gap-4">
     <h1 class="text-center text-xl font-bold sm:text-3xl mb-2">
       Glad to see You
     </h1>
     <h2
-      class="text-center font-semibold max-w-sm w-fit [text-wrap:balance] mb-2"
+      class="text-center font-semibold max-w-lg w-fit [text-wrap:balance] mb-2"
     >
       Just a few more steps before You can start converting Your notes
     </h2>
     <label
-      class="input input-bordered w-10/12 sm:w-9/12 input-neutral focus-within:input-primary flex items-center gap-2"
+      class="input input-bordered w-full  input-neutral focus-within:input-primary flex items-center gap-2"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -28,7 +28,7 @@
       <input type="text" class="grow text-lg" placeholder="Email" />
     </label>
     <label
-      class="input input-bordered w-10/12 sm:w-9/12 flex items-center focus-within:input-primary gap-2"
+      class="input input-bordered w-full  flex items-center focus-within:input-primary gap-2"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -50,7 +50,7 @@
       />
     </label>
     <label
-      class="input input-bordered w-10/12 sm:w-9/12 flex items-center focus-within:input-primary gap-2"
+      class="input input-bordered w-full  flex items-center focus-within:input-primary gap-2"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -71,10 +71,10 @@
         value=""
       />
     </label>
-    <button class="btn w-10/12 sm:w-9/12 btn-primary text-lg">Sign up</button>
+    <button class="btn w-full  btn-primary text-lg">Sign up</button>
     <p>Or</p>
     <button
-      class="btn w-10/12 sm:w-9/12 btn-neutral btn-outline gap-1 sm:gap-2"
+      class="btn w-full  btn-neutral btn-outline gap-1 sm:gap-2"
     >
       <p
         class="py-1 font-bold bg-[linear-gradient(to_right,theme(colors.red.500),theme(colors.yellow.500),theme(colors.green.500),theme(colors.blue.500))] inline-block text-transparent bg-clip-text"
