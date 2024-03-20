@@ -15,11 +15,12 @@
 		let documentHtml = document.querySelector('html');
 		if (documentHtml) documentHtml.setAttribute('data-theme', theme);
 	}
+
 	const themes = ['light', 'dark', 'emerald', 'dim', 'nord', 'dracula', 'fantasy'];
 </script>
 
 <div class={`dropdown dropdown-hover ${className}`}>
-	<button class="btn btn-neutral btn-xs btn-outline font-bold">Theme</button>
+	<button class="btn btn-neutral btn-xs btn-outline font-semibold">Theme</button>
 	<ul class="dropdown-content z-30 menu p-2 shadow bg-base-200 rounded-box w-fit">
 		{#each themes as themeName}
 			<li>
