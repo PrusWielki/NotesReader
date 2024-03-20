@@ -2,9 +2,10 @@
 	import { CARDS_MOCK_DATA } from '$lib/mock_data/cards';
 	import Card from '$lib/components/card/card.svelte';
 	import CardModal from '$lib/components/card_modal/card_modal.svelte';
-	import { text } from '@sveltejs/kit';
 	let openModal = false;
 	let currentText = '';
+	let currentImage = {};
+	let currentSummary = '';
 </script>
 
 <div class="w-full h-[100dvh]">
@@ -15,6 +16,8 @@
 					on:click={() => {
 						openModal = true;
 						currentText = card.text;
+						currentSummary = card.summary;
+						currentImage = card.image;
 					}}
 					class="w-full sm:w-96"
 				>
@@ -22,6 +25,11 @@
 				</button>
 			{/each}
 		</div>
-		<CardModal bind:open={openModal} text={currentText} />
+		<CardModal
+			bind:open={openModal}
+			summary={currentSummary}
+			image={currentImage}
+			text={currentText}
+		/>
 	</div>
 </div>

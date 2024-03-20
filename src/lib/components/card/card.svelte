@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let text: string;
+	export let text: string = '';
 </script>
 
 <div class="h-full max-h-28 border-solid border-2 border-accent rounded-lg p-4 cursor-pointer">

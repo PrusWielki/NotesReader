@@ -1,6 +1,8 @@
 <script lang="ts">
 	export let text: string;
 	export let open: boolean;
+	export let summary: string = '';
+	export let image: any = {};
 
 	let dialogRef: HTMLDialogElement;
 	$: {
@@ -31,10 +33,15 @@
 	}
 </script>
 
-<dialog class="backdrop:backdrop-blur-sm" bind:this={dialogRef}>
-	<div class="w-full h-full bg-base-300 p-10 max-w-md">
+<dialog class=" backdrop:backdrop-blur-sm bg-base-300" bind:this={dialogRef}>
+	<div class="w-full prose overflow-auto h-3/4 h-full p-10 max-w-md sm:max-w-xl">
+		<h2>Summary</h2>
+		<p>{summary}</p>
+		<h2>Content</h2>
 		<p>
 			{text}
 		</p>
+		<h2>Source Image</h2>
+		<img src={image} alt="source" />
 	</div>
 </dialog>
