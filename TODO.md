@@ -1,0 +1,1 @@
+- [ ] comply with svelte 5 runes and effect
