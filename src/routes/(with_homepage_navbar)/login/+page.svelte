@@ -1,3 +1,7 @@
+<script>
+	import { goto } from '$app/navigation';
+</script>
+
 <div class="w-full font-montserrat min-h-[100lvh] flex items-center">
 	<form class="max-w-md w-10/12 sm:w-full mx-auto px-4 flex flex-col items-center gap-4">
 		<h1 class="text-center text-2xl font-bold sm:text-3xl mb-2">Welcome back</h1>
@@ -34,7 +38,7 @@
 			</svg>
 			<input type="password" class="grow text-lg" placeholder="Password" value="" />
 		</label>
-		<button type="submit" class="btn w-full btn-primary text-lg">Login</button>
+		<a href="/main" class="btn w-full btn-primary text-lg">Login</a>
 		<p>Or</p>
 		<button class="btn w-full btn-neutral btn-outline gap-1 sm:gap-2">
 			<p
