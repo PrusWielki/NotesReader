@@ -58,6 +58,9 @@ resource "google_project_service" "default" {
     "serviceusage.googleapis.com",
     "aiplatform.googleapis.com",
     "servicenetworking.googleapis.com",
+    "cloudfunctions.googleapis.com",
+    "cloudbuild.googleapis.com",
+    "run.googleapis.com"
   ])
   service = each.key
 
@@ -200,3 +203,68 @@ resource "google_firebase_storage_bucket" "default-bucket" {
   bucket_id = google_app_engine_application.default.default_bucket
 }
 
+# CLOUD FUNCTION
+resource "google_project_service" "cf" {
+  project = google_project.default.project_id
+  service = "cloudfunctions.googleapis.com"
+
+  disable_dependent_services = true
+  disable_on_destroy         = false
+}
+
+resource "random_id" "default" {
+  byte_length = 8
+}
+resource "google_project_service" "cb" {
+  project = google_project.default.project_id
+  service = "cloudbuild.googleapis.com"
+
+  disable_dependent_services = true
+  disable_on_destroy         = false
+}
+resource "google_storage_bucket" "default" {
+  name                        = "${random_id.default.hex}-gcf-source" # Every bucket name must be globally unique
+  location                    = var.document_ai_region
+  uniform_bucket_level_access = true
+}
+
+
+resource "google_storage_bucket_object" "object" {
+  name   = "function-source.zip"
+  bucket = google_storage_bucket.default.name
+  source = var.cloud_function_path # Add path to the zipped function source code
+}
+
+resource "google_cloudfunctions2_function" "default" {
+  name        = "function-v2"
+  location    = var.region
+  description = "a new function"
+
+  build_config {
+    runtime     = "nodejs16"
+    entry_point = var.cloud_function_entry_point # Set the entry point
+    source {
+      storage_source {
+        bucket = google_storage_bucket.default.name
+        object = google_storage_bucket_object.object.name
+      }
+    }
+  }
+
+  service_config {
+    max_instance_count = 1
+    available_memory   = "256M"
+    timeout_seconds    = 60
+  }
+}
+
+resource "google_cloud_run_service_iam_member" "member" {
+  location = google_cloudfunctions2_function.default.location
+  service  = google_cloudfunctions2_function.default.name
+  role     = "roles/run.invoker"
+  member   = "allUsers"
+}
+
+output "function_uri" {
+  value = google_cloudfunctions2_function.default.service_config[0].uri
+}
