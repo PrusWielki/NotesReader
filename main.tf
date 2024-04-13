@@ -67,3 +67,12 @@ resource "google_firebase_project" "default" {
 }
 
 
+resource "google_firebase_web_app" "default" {
+  provider = google-beta
+
+  project      = google_firebase_project.default.project
+  display_name = var.project_name
+  deletion_policy = "DELETE"
+}
+
+
