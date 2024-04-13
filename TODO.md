@@ -1,3 +1,3 @@
 - [ ] comply with svelte 5 runes and effect
 - [ ] Fix modal scroll
-- [ ] Terraform: real time database, buckets, Document AI and PaLM services, Cloud Functions?
+- [ ] Terraform: real time database, Document AI and PaLM services, Cloud Functions?

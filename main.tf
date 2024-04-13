@@ -110,3 +110,85 @@ resource "google_identity_platform_config" "auth" {
     google_project_service.auth,
   ]
 }
+
+
+
+# STORAGE FOR IMAGES, CLOUD STORAGE BUCKET and FIRESTORE
+
+
+
+
+# Enable required APIs for Cloud Firestore.
+resource "google_project_service" "firestore" {
+  provider = google-beta
+
+  project  = google_firebase_project.default.project
+  for_each = toset([
+    "firestore.googleapis.com",
+    "firebaserules.googleapis.com",
+  ])
+  service = each.key
+
+  # Don't disable the service if the resource block is removed by accident.
+  disable_on_destroy = false
+}
+
+# Provision the Firestore database instance.
+resource "google_firestore_database" "default" {
+  provider                    = google-beta
+
+  project                     = google_firebase_project.default.project
+  name                        = "(default)"
+  # See available locations:
+  # https://firebase.google.com/docs/firestore/locations
+  location_id                 = var.region
+  # "FIRESTORE_NATIVE" is required to use Firestore with Firebase SDKs,
+  # authentication, and Firebase Security Rules.
+  type                        = "FIRESTORE_NATIVE"
+  concurrency_mode            = "OPTIMISTIC"
+
+  depends_on = [
+    google_project_service.firestore
+  ]
+}
+
+
+
+# Enable required APIs for Cloud Storage for Firebase.
+resource "google_project_service" "storage" {
+  provider = google-beta
+
+  project  = google_firebase_project.default.project
+  for_each = toset([
+    "firebasestorage.googleapis.com",
+    "storage.googleapis.com",
+  ])
+  service = each.key
+
+
+  # Don't disable the service if the resource block is removed by accident.
+  disable_on_destroy = false
+}
+
+# Provision the default Cloud Storage bucket for the project via Google App Engine.
+resource "google_app_engine_application" "default" {
+  provider    = google-beta
+
+  project     = google_firebase_project.default.project
+  # See available locations: https://firebase.google.com/docs/projects/locations#default-cloud-location
+  # This will set the location for the default Storage bucket and the App Engine App.
+  location_id = var.region  # Must be in the same location as Firestore (above)
+
+  # Wait until Firestore is provisioned first.
+  depends_on = [
+    google_firestore_database.default
+  ]
+}
+
+# Make the default Storage bucket accessible for Firebase SDKs, authentication, and Firebase Security Rules.
+resource "google_firebase_storage_bucket" "default-bucket" {
+  provider  = google-beta
+
+  project   = google_firebase_project.default.project
+  bucket_id = google_app_engine_application.default.default_bucket
+}
