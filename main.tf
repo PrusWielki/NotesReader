@@ -56,12 +56,15 @@ resource "google_project_service" "default" {
     "firebase.googleapis.com",
     # Enabling the ServiceUsage API allows the new project to be quota checked from now on.
     "serviceusage.googleapis.com",
+    "aiplatform.googleapis.com",
+    "servicenetworking.googleapis.com",
   ])
   service = each.key
 
   # Don't disable the service if the resource block is removed by accident.
   disable_on_destroy = false
 }
+
 
 # Enables Firebase services for the new project created above.
 resource "google_firebase_project" "default" {
