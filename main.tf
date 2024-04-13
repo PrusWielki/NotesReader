@@ -1,3 +1,7 @@
+
+
+# Provider
+
 # Terraform configuration to set up providers by version.
 terraform {
   required_providers {
@@ -20,7 +24,7 @@ provider "google-beta" {
   user_project_override = false
 }
 
-
+# Basic project setup
 
 # Creates a new Google Cloud project.
 resource "google_project" "default" {
@@ -65,7 +69,7 @@ resource "google_firebase_project" "default" {
     google_project_service.default
   ]
 }
-
+# WEB APP
 
 resource "google_firebase_web_app" "default" {
   provider = google-beta
@@ -76,3 +80,33 @@ resource "google_firebase_web_app" "default" {
 }
 
 
+
+
+# AUTH
+
+
+# Enable the Identity Toolkit API.
+resource "google_project_service" "auth" {
+  provider = google-beta
+
+  project  = google_firebase_project.default.project
+  service =  "identitytoolkit.googleapis.com"
+
+  # Don't disable the service if the resource block is removed by accident.
+  disable_on_destroy = false
+}
+
+# Create an Identity Platform config.
+# Also, enable Firebase Authentication using Identity Platform (if Authentication isn't yet enabled).
+resource "google_identity_platform_config" "auth" {
+  provider = google-beta
+  project  = google_firebase_project.default.project
+
+  # For example, you can configure to auto-delete anonymous users.
+  autodelete_anonymous_users = true
+
+  # Wait for identitytoolkit.googleapis.com to be enabled before initializing Authentication.
+  depends_on = [
+    google_project_service.auth,
+  ]
+}
