@@ -1,16 +1,16 @@
 variable "project_id" {
   type    = string
-  default = "notesreader6"
+  default = "notesreader8"
 }
 
 variable "project_name" {
   type    = string
-  default = "notesreader6"
+  default = "notesreader8"
 }
 
 variable "display_name" {
   type    = string
-  default = "notesreader6"
+  default = "notesreader8"
 }
 
 variable "region" {

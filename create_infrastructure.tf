@@ -119,44 +119,44 @@ resource "google_firestore_database" "default" {
 
 
 # Create a ruleset of Firestore Security Rules from a local file.
-resource "google_firebaserules_ruleset" "firestore" {
-  provider = google-beta
+#resource "google_firebaserules_ruleset" "firestore" {
+ # provider = google-beta
 
-  project  = google_firebase_project.default.project
-  source {
-    files {
-      name = "firestore.rules"
+  #project  = google_firebase_project.default.project
+  #source {
+   # files {
+    #  name = "firestore.rules"
       # Write security rules in a local file named "firestore.rules".
       # Learn more: https://firebase.google.com/docs/firestore/security/get-started
-      content = file("firestore.rules")
-    }
-  }
+     # content = file("firestore.rules")
+    #}
+  #}
 
   # Wait for Firestore to be provisioned before creating this ruleset.
-  depends_on = [
-    google_firestore_database.default,
-  ]
-}
+  #depends_on = [
+   # google_firestore_database.default,
+ # ]
+#}
 
 # Release the ruleset for the Firestore instance.
-resource "google_firebaserules_release" "firestore" {
-  provider     = google-beta
+#resource "google_firebaserules_release" "firestore" {
+ # provider     = google-beta
 
-  name         = "cloud.firestore"  # must be cloud.firestore
-  ruleset_name = google_firebaserules_ruleset.firestore.name
-  project      = google_firebase_project.default.project
+  #name         = "cloud.firestore"  # must be cloud.firestore
+  #ruleset_name = google_firebaserules_ruleset.firestore.name
+  #project      = google_firebase_project.default.project
 
   # Wait for Firestore to be provisioned before releasing the ruleset.
-  depends_on = [
-    google_firestore_database.default,
-  ]
+  #depends_on = [
+   # google_firestore_database.default,
+  #]
 
-  lifecycle {
-    replace_triggered_by = [
-      google_firebaserules_ruleset.firestore
-    ]
-  }
-}
+  #lifecycle {
+   # replace_triggered_by = [
+    #  google_firebaserules_ruleset.firestore
+    #]
+  #}
+#}
 
 
 
