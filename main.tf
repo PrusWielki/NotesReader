@@ -23,6 +23,10 @@ provider "google-beta" {
   alias = "no_user_project_override"
   user_project_override = false
 }
+provider "google" {
+  project     = var.project_name
+  region      = var.project_name
+}
 
 # Basic project setup
 
@@ -192,3 +196,4 @@ resource "google_firebase_storage_bucket" "default-bucket" {
   project   = google_firebase_project.default.project
   bucket_id = google_app_engine_application.default.default_bucket
 }
+
