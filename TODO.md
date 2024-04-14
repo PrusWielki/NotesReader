@@ -1,4 +1,2 @@
-- [ ] comply with svelte 5 runes and effect
 - [ ] Fix modal scroll
 - [ ] Create necessary cloud functions code
-- [ ] Terraform : KIND OF DONE: (Document AI and PaLM services) OR just Gemini

@@ -1,1 +1,0 @@
-{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"gcloud_deploy_app","Source":"registry.terraform.io/terraform-google-modules/gcloud/google","Version":"2.1.0","Dir":".terraform/modules/gcloud_deploy_app"}]}
