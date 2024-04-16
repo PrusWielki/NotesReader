@@ -2,3 +2,5 @@
 - [ ] Create necessary cloud functions code
 - [ ] Add automatic auth setup to Terraform
 - [ ] Write API in Sveltekit
+- [ ] Connect the main page to the realtime database
+- [ ] Connect modal to the realtime database
