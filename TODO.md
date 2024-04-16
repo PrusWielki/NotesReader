@@ -2,6 +2,7 @@
 - [ ] Create necessary cloud functions code
 - [ ] Add automatic auth setup to Terraform
 - [ ] Logout
+- [ ] Add Toasts instead of alerts :)
 - [ ] Write API in Sveltekit
 - [ ] Connect the main page to the realtime database
 - [ ] Connect modal to the realtime database
