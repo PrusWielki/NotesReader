@@ -1,6 +1,7 @@
 - [ ] Fix modal scroll
 - [ ] Create necessary cloud functions code
 - [ ] Add automatic auth setup to Terraform
+- [ ] Logout
 - [ ] Write API in Sveltekit
 - [ ] Connect the main page to the realtime database
 - [ ] Connect modal to the realtime database
