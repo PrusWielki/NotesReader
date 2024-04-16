@@ -1,7 +1,7 @@
 - [ ] Fix modal scroll
 - [ ] Create necessary cloud functions code
 - [ ] Add automatic auth setup to Terraform
-- [ ] Logout
+- [ ] Protected routes
 - [ ] Add Toasts instead of alerts :)
 - [ ] Write API in Sveltekit
 - [ ] Connect the main page to the realtime database
