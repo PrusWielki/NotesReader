@@ -1,2 +1,4 @@
 - [ ] Fix modal scroll
 - [ ] Create necessary cloud functions code
+- [ ] Add automatic auth setup to Terraform
+- [ ] Write API in Sveltekit
