@@ -1,9 +1,66 @@
-<script>
+<script lang="ts">
+	// login/+page.svelte
+	import { session } from '$lib/session';
+	import { auth } from '$lib/firebase.client';
+	import {
+		GoogleAuthProvider,
+		signInWithPopup,
+		signInWithEmailAndPassword,
+		type UserCredential
+	} from 'firebase/auth';
 	import { goto } from '$app/navigation';
+
+	let email: string = '';
+	let password: string = '';
+
+	async function loginWithMail() {
+		await signInWithEmailAndPassword(auth, email, password)
+			.then((result) => {
+				const { user }: UserCredential = result;
+				session.set({
+					loggedIn: true,
+					user: {
+						displayName: user?.displayName,
+						email: user?.email,
+						photoURL: user?.photoURL,
+						uid: user?.uid
+					}
+				});
+				goto('/');
+			})
+			.catch((error) => {
+				return error;
+			});
+	}
+
+	async function loginWithGoogle() {
+		const provider = new GoogleAuthProvider();
+		await signInWithPopup(auth, provider)
+			.then((result) => {
+				const { displayName, email, photoURL, uid } = result?.user;
+				session.set({
+					loggedIn: true,
+					user: {
+						displayName,
+						email,
+						photoURL,
+						uid
+					}
+				});
+
+				goto('/');
+			})
+			.catch((error) => {
+				return error;
+			});
+	}
 </script>
 
 <div class="w-full font-montserrat min-h-[100lvh] flex items-center">
-	<form class="max-w-md w-10/12 sm:w-full mx-auto px-4 flex flex-col items-center gap-4">
+	<form
+		class="max-w-md w-10/12 sm:w-full mx-auto px-4 flex flex-col items-center gap-4"
+		on:submit={loginWithMail}
+	>
 		<h1 class="text-center text-2xl font-bold sm:text-3xl mb-2">Welcome back</h1>
 		<label
 			class="input input-bordered w-full input-neutral focus-within:input-primary flex items-center gap-2"
@@ -38,9 +95,9 @@
 			</svg>
 			<input type="password" class="grow text-lg" placeholder="Password" value="" />
 		</label>
-		<a href="/main" class="btn w-full btn-primary text-lg">Login</a>
+		<btn type="submit" href="/main" class="btn w-full btn-primary text-lg">Login</btn>
 		<p>Or</p>
-		<button class="btn w-full btn-neutral btn-outline gap-1 sm:gap-2">
+		<button on:click={loginWithGoogle} class="btn w-full btn-neutral btn-outline gap-1 sm:gap-2">
 			<p
 				class="py-1 font-bold bg-[linear-gradient(to_right,theme(colors.red.500),theme(colors.yellow.500),theme(colors.green.500),theme(colors.blue.500))] inline-block text-transparent bg-clip-text"
 			>
