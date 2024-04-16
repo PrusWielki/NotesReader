@@ -1,5 +1,69 @@
+<script lang="ts">
+	// register/+page.svelte
+	import { auth } from '$lib/firebase.client';
+	import {
+		GoogleAuthProvider,
+		createUserWithEmailAndPassword,
+		signInWithPopup
+	} from 'firebase/auth';
+	import { goto } from '$app/navigation';
+	import { session } from '$lib/session';
+
+	let email: string = '';
+	let password: string = '';
+	let repeatedPassword: string = '';
+
+	async function handleRegister() {
+		if (repeatedPassword === password) {
+			await createUserWithEmailAndPassword(auth, email, password)
+				.then((result) => {
+					const { user } = result;
+					session.update((cur: any) => {
+						return {
+							...cur,
+							user,
+							loggedIn: true,
+							loading: false
+						};
+					});
+					goto('/');
+				})
+				.catch((error) => {
+					throw new Error(error);
+				});
+		} else {
+			alert('Passwords dont match');
+		}
+	}
+
+	async function loginWithGoogle() {
+		const provider = new GoogleAuthProvider();
+		await signInWithPopup(auth, provider)
+			.then((result) => {
+				const { displayName, email, photoURL, uid } = result?.user;
+				session.set({
+					loggedIn: true,
+					user: {
+						displayName,
+						email,
+						photoURL,
+						uid
+					}
+				});
+
+				goto('/main');
+			})
+			.catch((error) => {
+				return error;
+			});
+	}
+</script>
+
 <div class="w-full font-montserrat min-h-[100lvh] flex items-center">
-	<form class="max-w-md sm:w-full w-10/12 mx-auto px-4 flex flex-col items-center gap-4">
+	<form
+		class="max-w-md sm:w-full w-10/12 mx-auto px-4 flex flex-col items-center gap-4"
+		on:submit={handleRegister}
+	>
 		<h1 class="text-center text-xl font-bold sm:text-3xl mb-2">Glad to see You</h1>
 		<h2 class="text-center font-semibold max-w-lg w-fit [text-wrap:balance] mb-2">
 			Just a few more steps before You can start converting Your notes
@@ -20,7 +84,7 @@
 					d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z"
 				/>
 			</svg>
-			<input type="text" class="grow text-lg" placeholder="Email" />
+			<input bind:value={email} type="text" class="grow text-lg" placeholder="Email" />
 		</label>
 		<label class="input input-bordered w-full flex items-center focus-within:input-primary gap-2">
 			<svg
@@ -35,7 +99,7 @@
 					clip-rule="evenodd"
 				/>
 			</svg>
-			<input type="password" class="grow text-lg" placeholder="Password" value="" />
+			<input bind:value={password} type="password" class="grow text-lg" placeholder="Password" />
 		</label>
 		<label class="input input-bordered w-full flex items-center focus-within:input-primary gap-2">
 			<svg
@@ -50,11 +114,16 @@
 					clip-rule="evenodd"
 				/>
 			</svg>
-			<input type="password" placeholder="Repeat Password" class="grow text-lg" value="" />
+			<input
+				bind:value={repeatedPassword}
+				type="password"
+				placeholder="Repeat Password"
+				class="grow text-lg"
+			/>
 		</label>
-		<button class="btn w-full btn-primary text-lg">Sign up</button>
+		<button type="submit" class="btn w-full btn-primary text-lg">Sign up</button>
 		<p>Or</p>
-		<button class="btn w-full btn-neutral btn-outline gap-1 sm:gap-2">
+		<button on:click={loginWithGoogle} class="btn w-full btn-neutral btn-outline gap-1 sm:gap-2">
 			<p
 				class="py-1 font-bold bg-[linear-gradient(to_right,theme(colors.red.500),theme(colors.yellow.500),theme(colors.green.500),theme(colors.blue.500))] inline-block text-transparent bg-clip-text"
 			>
