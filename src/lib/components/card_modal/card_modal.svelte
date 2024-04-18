@@ -61,14 +61,15 @@
 				</g></svg
 			>
 		</button>
-
-		<h2>Summary</h2>
-		<p>{summary}</p>
-		<h2>Content</h2>
-		<p>
-			{text}
-		</p>
-		<h2>Source Image</h2>
-		<img src={image} alt="source" />
+		<div>
+			<h2>Summary</h2>
+			<p>{summary}</p>
+			<h2>Content</h2>
+			<p>
+				{text}
+			</p>
+			<h2>Source Image</h2>
+			<img src={image} alt="source" />
+		</div>
 	</div>
 </dialog>
