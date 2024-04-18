@@ -12,7 +12,7 @@
 <div class="w-full h-[100dvh]">
 	<div class="max-w-screen-xl mx-auto px-4 py-20">
 		<div class="flex flex-row flex-wrap gap-2 justify-center sm:justify-start">
-			<button class="btn-primary btn">Add a new note</button>
+			<!-- <button class="btn-primary btn">Add a new note</button> -->
 			{#each CARDS_MOCK_DATA as card}
 				<button
 					on:click={() => {
