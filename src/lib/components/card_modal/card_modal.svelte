@@ -39,13 +39,13 @@
 	}
 </script>
 
-<dialog class="backdrop:backdrop-blur-sm bg-base-300" bind:this={dialogRef}>
-	<div class="relative w-full prose overflow-auto h-3/4 h-full p-10 max-w-md sm:max-w-xl">
+<dialog class="backdrop:backdrop-blur-sm bg-base-300 h-3/4 rounded-btn" bind:this={dialogRef}>
+	<div class="relative w-full h-full max-w-md sm:max-w-xl py-10">
 		<button
 			on:click={() => {
 				handleCloseDialog();
 			}}
-			class="absolute cursor-pointer fill-accent w-8 h-8 right-4 top-4"
+			class="absolute cursor-pointer fill-accent w-8 h-8 right-4 top-2"
 		>
 			<svg role="button" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
 				><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g
@@ -61,7 +61,7 @@
 				</g></svg
 			>
 		</button>
-		<div>
+		<div class="h-full overflow-auto px-10 prose prose-h2:first-of-type:mt-0">
 			<h2>Summary</h2>
 			<p>{summary}</p>
 			<h2>Content</h2>
