@@ -4,7 +4,7 @@
 	let className: string;
 
 	export { className as class };
-	let theme: string | null;
+	let theme: string | null = '';
 	if (browser) {
 		theme = localStorage.getItem('theme');
 	}
@@ -20,7 +20,7 @@
 </script>
 
 <select
-	class="input input-primary input-sm"
+	class={`input input-primary input-sm ${className}`}
 	bind:value={selectedTheme}
 	on:change={() => {
 		if (selectedTheme) onThemeSelect(selectedTheme);
