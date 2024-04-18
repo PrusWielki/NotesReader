@@ -5,6 +5,7 @@
 	import { onMount } from 'svelte';
 
 	import type { LayoutData } from './$types';
+	import ThemePickerSelect from '$lib/components/theme_picker_select/theme_picker_select.svelte';
 	export let data: LayoutData;
 	let loggedIn = false;
 
@@ -41,9 +42,9 @@
 					</div>
 					<ul
 						tabindex="0"
-						class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+						class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow gap-4 bg-base-100 rounded-box w-52"
 					>
-						<li><ThemePicker class="" /></li>
+						<li><ThemePickerSelect class="" /></li>
 						<li>
 							<button
 								on:click={() => {
@@ -59,7 +60,6 @@
 								class="btn btn-outline btn-secondary btn-sm text-secondary-content">Logout</button
 							>
 						</li>
-						<li><a>Item 3</a></li>
 					</ul>
 				</div>
 				<a href="/" class="btn btn-ghost text-xl font-semibold">Notes Reader</a>
