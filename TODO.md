@@ -1,3 +1,4 @@
+- [ ] Deployment doesnt work correctly atm, learn how to set env variables in firebase
 - [ ] Create necessary cloud functions code
 - [ ] Add automatic auth setup to Terraform
 - [ ] Add Toasts instead of alerts :)
