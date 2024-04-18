@@ -4,3 +4,4 @@
 - [ ] Write API in Sveltekit
 - [ ] Connect the main page to the realtime database
 - [ ] Connect modal to the realtime database
+- [ ] Add note upload functionality
