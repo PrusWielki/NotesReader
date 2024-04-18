@@ -39,7 +39,7 @@
 								alert('Logout error');
 							});
 					}}
-					class="btn btn-outline btn-secondary btn-sm text-primary-content">Logout</button
+					class="btn btn-outline btn-secondary btn-sm text-secondary-content">Logout</button
 				>
 			</div>
 		</div>

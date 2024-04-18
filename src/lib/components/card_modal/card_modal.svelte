@@ -45,7 +45,7 @@
 			on:click={() => {
 				handleCloseDialog();
 			}}
-			class="absolute cursor-pointer fill-accent w-8 h-8 right-4 top-2"
+			class="absolute cursor-pointer fill-primary w-8 h-8 right-4 top-2"
 		>
 			<svg role="button" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
 				><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g
