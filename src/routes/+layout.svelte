@@ -37,11 +37,4 @@
 	});
 </script>
 
-{#if loading}
-	<div>Loading...</div>
-{:else}
-	<div>
-		Logged in: {loggedIn}
-		<slot />
-	</div>
-{/if}
+<slot />
