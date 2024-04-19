@@ -1,4 +1,9 @@
+<input class="hidden" id="fileInput" type="file" name="filename" />
 <button
+	on:click={() => {
+		const element = document.getElementById('fileInput');
+		if (element) element.click();
+	}}
 	class="fill-primary-content p-2 btn-primary rounded-box btn btn-square flex items-center justify-center"
 >
 	<div class="h-6 w-6">

@@ -35,7 +35,7 @@
 			text={currentText}
 		/>
 	</div>
-	<div class="fixed lg:hidden block right-10 bottom-[5lvh]">
+	<div class="fixed lg:hidden block right-6 bottom-[5lvh]">
 		<PlusButton />
 	</div>
 </div>
