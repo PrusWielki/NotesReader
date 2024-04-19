@@ -60,7 +60,8 @@ resource "google_project_service" "default" {
     "servicenetworking.googleapis.com",
     "cloudfunctions.googleapis.com",
     "cloudbuild.googleapis.com",
-    "run.googleapis.com"
+    "run.googleapis.com",
+    "eventarc.googleapis.com
   ])
   service = each.key
 
