@@ -8,6 +8,7 @@
 	} from 'firebase/auth';
 	import { goto } from '$app/navigation';
 	import { session } from '$lib/session';
+	import { showNotification } from '$lib/hooks/show-notification';
 
 	let email: string = '';
 	let password: string = '';
@@ -32,7 +33,7 @@
 					throw new Error(error);
 				});
 		} else {
-			alert('Passwords dont match');
+			showNotification('Passwords dont match!', 2000, 'Failure');
 		}
 	}
 

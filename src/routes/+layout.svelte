@@ -5,6 +5,7 @@
 	import { goto } from '$app/navigation';
 	import { signOut } from 'firebase/auth';
 	import { auth } from '$lib/firebase.client';
+	import Toast from '$lib/components/toast/toast.svelte';
 
 	import type { LayoutData } from './$types';
 	export let data: LayoutData;
@@ -37,4 +38,5 @@
 	});
 </script>
 
+<Toast />
 <slot />

@@ -6,6 +6,7 @@
 
 	import type { LayoutData } from './$types';
 	import ThemePickerSelect from '$lib/components/theme_picker_select/theme_picker_select.svelte';
+	import { showNotification } from '$lib/hooks/show-notification';
 	export let data: LayoutData;
 	let loggedIn = false;
 
@@ -54,7 +55,7 @@
 											goto('/');
 										})
 										.catch((error) => {
-											alert('Logout error');
+											showNotification('Logout Error!', 2000, 'Failure');
 										});
 								}}
 								class="btn btn-ghost btn-secondary btn-sm">Logout</button
@@ -82,7 +83,7 @@
 								goto('/');
 							})
 							.catch((error) => {
-								alert('Logout error');
+								showNotification('Logout Error!', 2000, 'Failure');
 							});
 					}}
 					class="btn btn-ghost btn-secondary btn-sm">Logout</button
