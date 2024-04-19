@@ -20,7 +20,7 @@
 </script>
 
 <select
-	class={`input input-primary input-sm ${className}`}
+	class={`btn btn-neutral btn-ghost  btn-sm ${className}`}
 	bind:value={selectedTheme}
 	on:change={() => {
 		if (selectedTheme) onThemeSelect(selectedTheme);

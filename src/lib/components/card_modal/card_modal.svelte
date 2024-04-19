@@ -39,7 +39,7 @@
 	}
 </script>
 
-<dialog class="backdrop:backdrop-blur-sm bg-base-300 h-3/4 rounded-btn" bind:this={dialogRef}>
+<dialog class="backdrop:backdrop-blur-sm bg-base-300 h-3/4 rounded-box" bind:this={dialogRef}>
 	<div class="relative w-full h-full max-w-md sm:max-w-xl py-10">
 		<button
 			on:click={() => {

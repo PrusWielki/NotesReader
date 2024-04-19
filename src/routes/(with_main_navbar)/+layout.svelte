@@ -42,7 +42,7 @@
 					</div>
 					<ul
 						tabindex="0"
-						class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow gap-4 bg-base-100 rounded-box w-52"
+						class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow gap-4 bg-base-200 rounded-box w-52"
 					>
 						<li><ThemePickerSelect class="" /></li>
 						<li>
@@ -57,12 +57,16 @@
 											alert('Logout error');
 										});
 								}}
-								class="btn btn-outline btn-secondary btn-sm text-secondary-content">Logout</button
+								class="btn btn-ghost btn-secondary btn-sm">Logout</button
 							>
 						</li>
 					</ul>
 				</div>
 				<a href="/" class="btn btn-ghost text-xl font-semibold">Notes Reader</a>
+				<!-- 				<input
+					class="input input-bordered input-secondary block lg:hidden"
+					placeholder="search..."
+				/> -->
 			</div>
 			<div class="navbar-center">
 				<button class="btn btn-primary hidden lg:block mx-auto">Add a new note</button>
@@ -81,7 +85,7 @@
 								alert('Logout error');
 							});
 					}}
-					class="btn btn-outline btn-secondary btn-sm text-secondary-content">Logout</button
+					class="btn btn-ghost btn-secondary btn-sm">Logout</button
 				>
 			</div>
 		</div>
