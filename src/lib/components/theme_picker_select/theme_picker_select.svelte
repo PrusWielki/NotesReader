@@ -4,7 +4,7 @@
 	let className: string;
 
 	export { className as class };
-	let theme: string | null = '';
+	let theme: string | null = 'theme';
 	if (browser) {
 		theme = localStorage.getItem('theme');
 	}

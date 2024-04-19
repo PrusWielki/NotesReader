@@ -1,5 +1,5 @@
 <button
-	class="fill-secondary-content p-2 btn-secondary rounded-btn btn btn-square flex items-center justify-center"
+	class="fill-primary-content p-2 btn-primary rounded-btn btn btn-square flex items-center justify-center"
 >
 	<div class="h-6 w-6">
 		<svg

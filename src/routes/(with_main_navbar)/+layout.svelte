@@ -64,6 +64,9 @@
 				</div>
 				<a href="/" class="btn btn-ghost text-xl font-semibold">Notes Reader</a>
 			</div>
+			<div class="navbar-center">
+				<button class="btn btn-primary hidden lg:block mx-auto">Add a new note</button>
+			</div>
 
 			<div class="navbar-end hidden lg:flex gap-4">
 				<ThemePicker class="" />
