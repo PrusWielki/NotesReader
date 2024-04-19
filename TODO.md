@@ -1,8 +1,7 @@
-- [ ] Deployment doesnt work correctly atm, learn how to set env variables in firebase
 - [ ] Create necessary cloud functions code
 - [ ] Add automatic auth setup to Terraform
 - [ ] Add Toasts instead of alerts :)
-- [ ] Write API in Sveltekit
+- [ ] Write API in Sveltekit or maybe just communicate via client
 - [ ] Connect the main page to the realtime database
 - [ ] Connect modal to the realtime database
 - [ ] Add note upload functionality
