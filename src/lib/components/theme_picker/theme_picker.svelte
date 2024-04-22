@@ -21,7 +21,7 @@
 
 <div class={`dropdown dropdown-hover ${className}`}>
 	<button
-		class="btn btn-neutral btn-sm btn-ghost font-semibold flex items-center justify-center fill-neutral-content"
+		class="btn btn-neutral btn-sm btn-ghost font-semibold flex flex-nowrap items-center justify-center fill-neutral-content"
 		>Theme <svg
 			height="8px"
 			width="8px"
