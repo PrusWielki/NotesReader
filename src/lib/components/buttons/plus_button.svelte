@@ -8,7 +8,7 @@
 	type="file"
 	name="filename"
 	on:change={(e) => {
-		if (e.target) pushImage(e.target.files[0]);
+		if (e.currentTarget?.files) pushImage(e.currentTarget.files[0]);
 	}}
 />
 <button
