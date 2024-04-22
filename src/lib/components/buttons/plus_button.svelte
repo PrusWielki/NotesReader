@@ -3,7 +3,6 @@
 	import { getStorage, ref, uploadBytes } from 'firebase/storage';
 
 	const storage = getStorage();
-	const storageRef = ref(storage, 'xd');
 
 	// 'file' comes from the Blob or File API
 </script>
@@ -14,6 +13,7 @@
 	type="file"
 	name="filename"
 	on:change={(e) => {
+		const storageRef = ref(storage, 'images/' + crypto.randomUUID());
 		uploadBytes(storageRef, e.target.files[0]).then((snapshot) => {
 			console.log('Uploaded a blob or file!');
 		});
