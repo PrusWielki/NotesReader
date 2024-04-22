@@ -1,4 +1,24 @@
-<input class="hidden" id="fileInput" type="file" name="filename" />
+<script lang="ts">
+	import { pushImage } from '$lib/hooks/database-hooks';
+	import { getStorage, ref, uploadBytes } from 'firebase/storage';
+
+	const storage = getStorage();
+	const storageRef = ref(storage, 'xd');
+
+	// 'file' comes from the Blob or File API
+</script>
+
+<input
+	class="hidden"
+	id="fileInput"
+	type="file"
+	name="filename"
+	on:change={(e) => {
+		uploadBytes(storageRef, e.target.files[0]).then((snapshot) => {
+			console.log('Uploaded a blob or file!');
+		});
+	}}
+/>
 <button
 	on:click={() => {
 		const element = document.getElementById('fileInput');

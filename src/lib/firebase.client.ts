@@ -10,22 +10,23 @@ export let app: FirebaseApp;
 export let auth: Auth;
 
 const firebaseConfig = {
- apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
- appId: import.meta.env.VITE_FIREBASE_APP_ID,
- useEmulator: import.meta.env.VITE_FIREBASE_USE_EMULATOR === 'true',
- authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN
+	apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+	appId: import.meta.env.VITE_FIREBASE_APP_ID,
+	useEmulator: import.meta.env.VITE_FIREBASE_USE_EMULATOR === 'true',
+	authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+	storageBucket: import.meta.env.VITE_STORAGE_BUCKET_DEFUALT
 };
 
 export const initializeFirebase = () => {
- if (!browser) {
-  throw new Error("Can't use the Firebase client on the server.");
- }
- if (!app) {
-  app = initializeApp(firebaseConfig);
-  auth = getAuth(app);
+	if (!browser) {
+		throw new Error("Can't use the Firebase client on the server.");
+	}
+	if (!app) {
+		app = initializeApp(firebaseConfig);
+		auth = getAuth(app);
 
-  if (firebaseConfig.useEmulator) {
-   connectAuthEmulator(auth, 'http://127.0.0.1:9099');
-  }
- }
+		if (firebaseConfig.useEmulator) {
+			connectAuthEmulator(auth, 'http://127.0.0.1:9099');
+		}
+	}
 };
