@@ -61,7 +61,7 @@ resource "google_project_service" "default" {
     "cloudfunctions.googleapis.com",
     "cloudbuild.googleapis.com",
     "run.googleapis.com",
-    "eventarc.googleapis.com
+    "eventarc.googleapis.com"
   ])
   service = each.key
 
@@ -144,6 +144,7 @@ resource "google_project_service" "firestore" {
   disable_on_destroy = false
 }
 
+
 # Provision the Firestore database instance.
 resource "google_firestore_database" "default" {
   provider                    = google-beta
@@ -203,6 +204,42 @@ resource "google_firebase_storage_bucket" "default-bucket" {
   project   = google_firebase_project.default.project
   bucket_id = google_app_engine_application.default.default_bucket
 }
+
+# Create a ruleset of Cloud Storage Security Rules from a local file.
+resource "google_firebaserules_ruleset" "storage" {
+  provider = google-beta
+
+  project  = google_firebase_project.default.project
+  source {
+    files {
+      # Write security rules in a local file named "storage.rules".
+      # Learn more: https://firebase.google.com/docs/storage/security/get-started
+      name    = "storage.rules"
+      content = file("storage.rules")
+    }
+  }
+
+  # Wait for the default Storage bucket to be provisioned before creating this ruleset.
+  depends_on = [
+    google_firebase_storage_bucket.default-bucket,
+  ]
+}
+
+# Release the ruleset to the default Storage bucket.
+resource "google_firebaserules_release" "default-bucket" {
+  provider     = google-beta
+
+  name         = "firebase.storage/${google_app_engine_application.default.default_bucket}"
+  ruleset_name = "projects/${google_firebase_project.default.project}/rulesets/${google_firebaserules_ruleset.storage.name}"
+  project      = google_firebase_project.default.project
+
+  lifecycle {
+    replace_triggered_by = [
+      google_firebaserules_ruleset.storage
+    ]
+  }
+}
+
 
 # CLOUD FUNCTION
 resource "google_project_service" "cf" {
