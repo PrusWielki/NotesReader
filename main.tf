@@ -61,7 +61,8 @@ resource "google_project_service" "default" {
     "cloudfunctions.googleapis.com",
     "cloudbuild.googleapis.com",
     "run.googleapis.com",
-    "eventarc.googleapis.com"
+    "eventarc.googleapis.com",
+    "pubsub.googleapis.com"
   ])
   service = each.key
 
@@ -242,6 +243,15 @@ resource "google_firebaserules_release" "default-bucket" {
 
 
 # CLOUD FUNCTION
+
+
+
+# Topic that will via an Eventarc-trigger trigger Cloud function
+resource "google_pubsub_topic" "topic" {
+  name = "cloud-function-topic"
+}
+
+
 resource "google_project_service" "cf" {
   project = google_project.default.project_id
   service = "cloudfunctions.googleapis.com"
@@ -279,25 +289,85 @@ resource "google_storage_bucket_object" "archive" {
   source = data.archive_file.default.output_path # Add path to the zipped function source code
 }
 
-resource "google_cloudfunctions_function" "function" {
-  name        = "function-test"
-  description = "My function"
-  runtime     = "nodejs16"
-  region=var.region
+#resource "google_cloudfunctions_function" "function" {
+ # name        = "function-test"
+  #description = "My function"
+  #runtime     = "nodejs16"
+  #region=var.region
 
-  available_memory_mb   = 128
-  source_archive_bucket = google_storage_bucket.bucket.name
-  source_archive_object = google_storage_bucket_object.archive.name
-  trigger_http          = true
-  entry_point           = var.cloud_function_entry_point
+  #available_memory_mb   = 128
+  #source_archive_bucket = google_storage_bucket.bucket.name
+  #source_archive_object = google_storage_bucket_object.archive.name
+  #trigger_http          = true
+  #entry_point           = var.cloud_function_entry_point
+#}
+
+
+
+
+resource "google_service_account" "default" {
+  account_id   = "test-gcf-sa"
+  display_name = "Test Service Account"
 }
+
+
+
+resource "google_cloudfunctions2_function" "default" {
+  name        = "function"
+  location    = var.region
+  description = "a new function"
+
+  build_config {
+    runtime     = "nodejs16"
+    entry_point = var.cloud_function_entry_point # Set the entry point
+    environment_variables = {
+      BUILD_CONFIG_TEST = "build_test"
+    }
+    source {
+      storage_source {
+        bucket = google_storage_bucket.bucket.name
+        object = google_storage_bucket_object.archive.name
+      }
+    }
+  }
+
+  service_config {
+    min_instance_count = 1
+    available_memory   = "256M"
+    timeout_seconds    = 60
+    environment_variables = {
+      SERVICE_CONFIG_TEST = "config_test"
+    }
+    ingress_settings               = "ALLOW_INTERNAL_ONLY"
+    all_traffic_on_latest_revision = true
+    service_account_email          = google_service_account.default.email
+  }
+
+  event_trigger {
+    trigger_region = var.region
+    event_type     = "google.cloud.pubsub.topic.v1.messagePublished"
+    pubsub_topic   = google_pubsub_topic.topic.id
+    retry_policy   = "RETRY_POLICY_RETRY"
+  }
+}
+
+
+
+
+
+
+
+
+
 
 # IAM entry for all users to invoke the function
-resource "google_cloudfunctions_function_iam_member" "invoker" {
-  project        = google_cloudfunctions_function.function.project
-  region         = google_cloudfunctions_function.function.region
-  cloud_function = google_cloudfunctions_function.function.name
+# resource "google_cloudfunctions_function_iam_member" "invoker" {
+  #project        = google_cloudfunctions_function.function.project
+  #region         = google_cloudfunctions_function.function.region
+  #cloud_function = google_cloudfunctions_function.function.name
 
-  role   = "roles/cloudfunctions.invoker"
-  member = "allUsers"
-}
+  #role   = "roles/cloudfunctions.invoker"
+  #member = "allUsers"
+#}
+
+
