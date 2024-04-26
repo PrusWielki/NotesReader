@@ -27,6 +27,7 @@ functions.cloudEvent('extractText', async (cloudEvent) => {
 	// const base64name = cloudEvent.data.message.data;
 
 	// const name = base64name ? Buffer.from(base64name, 'base64').toString() : 'World';
+	console.log(cloudEvent);
 	const { bucket, name } = cloudEvent.data;
 	console.log(bucket, name);
 	const [textDetections] = await vision.textDetection(`gs://${bucket}/${name}`);
