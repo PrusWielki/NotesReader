@@ -17,14 +17,21 @@
 // [START functions_cloudevent_pubsub]
 const functions = require('@google-cloud/functions-framework');
 
+const Vision = require('@google-cloud/vision');
+const vision = new Vision.ImageAnnotatorClient();
+
 // Register a CloudEvent callback with the Functions Framework that will
 // be executed when the Pub/Sub trigger topic receives a message.
-functions.cloudEvent('helloPubSub', (cloudEvent) => {
+functions.cloudEvent('extractText', async (cloudEvent) => {
 	// The Pub/Sub message is passed as the CloudEvent's data payload.
 	// const base64name = cloudEvent.data.message.data;
 
 	// const name = base64name ? Buffer.from(base64name, 'base64').toString() : 'World';
-	const name = 'xd';
-	console.log(`Hello, ${name}!`);
+	const { bucket, name } = cloudEvent.data;
+
+	const [textDetections] = await vision.textDetection(`gs://${bucket}/${name}`);
+	const [annotation] = textDetections.textAnnotations;
+	const text = annotation ? annotation.description.trim() : '';
+	console.log('Extracted text from image:', text);
 });
 // [END functions_cloudevent_pubsub]
