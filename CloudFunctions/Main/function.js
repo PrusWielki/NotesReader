@@ -21,11 +21,10 @@ const functions = require('@google-cloud/functions-framework');
 // be executed when the Pub/Sub trigger topic receives a message.
 functions.cloudEvent('helloPubSub', (cloudEvent) => {
 	// The Pub/Sub message is passed as the CloudEvent's data payload.
-	const base64name = cloudEvent.data.message.data;
+	// const base64name = cloudEvent.data.message.data;
 
-	const name = base64name ? Buffer.from(base64name, 'base64').toString() : 'World';
-
-	res.send(`Hello, ${name}!`);
+	// const name = base64name ? Buffer.from(base64name, 'base64').toString() : 'World';
+	const name = 'xd';
 	console.log(`Hello, ${name}!`);
 });
 // [END functions_cloudevent_pubsub]

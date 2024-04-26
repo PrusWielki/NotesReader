@@ -1,16 +1,16 @@
 variable "project_id" {
   type    = string
-  default = "notesreader"
+  default = "notesreader11"
 }
 
 variable "project_name" {
   type    = string
-  default = "notesreader"
+  default = "notesreader11"
 }
 
 variable "display_name" {
   type    = string
-  default = "notesreader"
+  default = "notesreader11"
 }
 
 variable "region" {
@@ -31,10 +31,10 @@ variable "document_ai_region" {
 
 variable "cloud_function_path" {
   type = string
-  default = "./CloudFunctions/Hello"
+  default = "./CloudFunctions/Main"
 }
 
 variable "cloud_function_entry_point" {
   type = string
-  default = "helloHttp"
+  default = "helloPubSub"
 }

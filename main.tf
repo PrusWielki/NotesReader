@@ -289,24 +289,7 @@ resource "google_storage_bucket_object" "archive" {
   source = data.archive_file.default.output_path # Add path to the zipped function source code
 }
 
-#resource "google_cloudfunctions_function" "function" {
- # name        = "function-test"
-  #description = "My function"
-  #runtime     = "nodejs16"
-  #region=var.region
 
-  #available_memory_mb   = 128
-  #source_archive_bucket = google_storage_bucket.bucket.name
-  #source_archive_object = google_storage_bucket_object.archive.name
-  #trigger_http          = true
-  #entry_point           = var.cloud_function_entry_point
-#}
-
-resource "google_storage_bucket" "trigger_bucket" {
-  name                        = "${random_id.default.hex}-gcf-trigger-bucket"
-  location                    = var.region # The trigger must be in the same location as the bucket
-  uniform_bucket_level_access = true
-}
 
 
 
@@ -358,7 +341,7 @@ resource "google_cloudfunctions2_function" "default" {
   description = "a new function"
 
   build_config {
-    runtime     = "nodejs16"
+    runtime     = "nodejs20"
     entry_point = var.cloud_function_entry_point # Set the entry point in the code
     environment_variables = {
       BUILD_CONFIG_TEST = "build_test"
@@ -390,30 +373,11 @@ resource "google_cloudfunctions2_function" "default" {
     service_account_email = google_service_account.account.email
     event_filters {
       attribute = "bucket"
-      value     = google_storage_bucket.trigger_bucket.name
+      value     = google_firebase_storage_bucket.default-bucket.bucket_id
     }
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-# IAM entry for all users to invoke the function
-# resource "google_cloudfunctions_function_iam_member" "invoker" {
-  #project        = google_cloudfunctions_function.function.project
-  #region         = google_cloudfunctions_function.function.region
-  #cloud_function = google_cloudfunctions_function.function.name
-
-  #role   = "roles/cloudfunctions.invoker"
-  #member = "allUsers"
-#}
 
 
 
