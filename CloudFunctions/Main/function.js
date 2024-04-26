@@ -28,10 +28,12 @@ functions.cloudEvent('extractText', async (cloudEvent) => {
 
 	// const name = base64name ? Buffer.from(base64name, 'base64').toString() : 'World';
 	const { bucket, name } = cloudEvent.data;
-
+	console.log(bucket, name);
 	const [textDetections] = await vision.textDetection(`gs://${bucket}/${name}`);
 	const [annotation] = textDetections.textAnnotations;
 	const text = annotation ? annotation.description.trim() : '';
-	console.log('Extracted text from image:', text);
+	console.log('Extracted text from image:', textDetections);
+	const fullTextAnnotation = textDetections.fullTextAnnotation;
+	console.log(fullTextAnnotation.text);
 });
 // [END functions_cloudevent_pubsub]
