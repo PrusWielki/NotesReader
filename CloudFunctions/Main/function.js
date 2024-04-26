@@ -25,6 +25,7 @@ functions.cloudEvent('helloPubSub', (cloudEvent) => {
 
 	const name = base64name ? Buffer.from(base64name, 'base64').toString() : 'World';
 
+	res.send(`Hello, ${name}!`);
 	console.log(`Hello, ${name}!`);
 });
 // [END functions_cloudevent_pubsub]
