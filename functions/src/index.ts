@@ -12,14 +12,16 @@ import * as logger from 'firebase-functions/logger';
 import { setGlobalOptions } from 'firebase-functions/v2';
 
 setGlobalOptions({ region: 'europe-west1' });
-// import vision from '@google-cloud/vision';
+import vision from '@google-cloud/vision';
 
-// const client = new vision.ImageAnnotatorClient();
+const client = new vision.ImageAnnotatorClient();
 
 // Start writing functions
 // https://firebase.google.com/docs/functions/typescript
 
-export const extractText = onRequest((request, response) => {
+export const extractText = onRequest({ cors: true }, async (request, response) => {
+	logger.info(request.body);
+	const value = await client.annotateImage(request.body);
 	logger.info('Hello logs!', { structuredData: true });
-	response.send('Hello from Firebase!');
+	response.send(value);
 });

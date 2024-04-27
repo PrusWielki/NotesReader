@@ -1,13 +1,14 @@
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
 import { showNotification } from './show-notification';
 
-import { ImageAnnotatorClient } from '@google-cloud/vision';
-
 export const pushImage = async (image: File) => {
 	const fileExt = image.name.split('.').pop();
 	if (fileExt !== 'png' && fileExt !== 'jpg' && fileExt !== 'pdf')
 		showNotification('File should be .png, .jpg !', 4000, 'Failure');
 
+	fetch(import.meta.env.VITE_HTTPFUNCTION_URL, { method: 'POST', body: image }).then((res) =>
+		console.log(res)
+	);
 	/* 
 	const vision = new ImageAnnotatorClient();
 	const [textDetections] = await vision.textDetection(image);
