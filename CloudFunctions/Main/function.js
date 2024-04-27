@@ -20,6 +20,10 @@ const functions = require('@google-cloud/functions-framework');
 const Vision = require('@google-cloud/vision');
 const vision = new Vision.ImageAnnotatorClient();
 
+const admin = require('firebase-admin');
+
+admin.initializeApp();
+
 // Register a CloudEvent callback with the Functions Framework that will
 // be executed when the Pub/Sub trigger topic receives a message.
 functions.cloudEvent('extractText', async (cloudEvent) => {

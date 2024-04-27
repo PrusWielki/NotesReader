@@ -1,3 +1,15 @@
+Do it that way:
+
+1. From the client, save the file in a bucket created on GCP
+2. Send a http request to a cloud function with: bucketName, fileName, userId
+   1. But this way I'm exposing bucketname and userId which I would rather not do.
+
+Better yet:
+
+1. Send file over http to a cloud function, make it save the file to a bucket
+2. Make the function return text, and summary
+3. In the client save the information to a firestore
+
 - [ ] Create necessary cloud functions code - I have no idea how to make it event driven, cause when you want to trigger the function on a bucket upload event then you don't have access to who actually uploaded that file so it's hard to associate a user with a processed file and in order to allow vision api access to that bucket it would need to be made public it seems. So I think it's better to trigger it over http, by sending the image and then the function should return the extracted text and summary
 - [ ] Add automatic auth setup to Terraform -that actually might not be possible :()
 - [ ] Write API in Sveltekit or maybe just communicate via client
