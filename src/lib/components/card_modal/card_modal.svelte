@@ -1,19 +1,13 @@
 <script lang="ts">
-	import { getDownloadURL, getStorage, ref } from 'firebase/storage';
+	import { getStorage, ref, getBlob } from 'firebase/storage';
 
-	export let text: string;
-	export let open: boolean;
-	export let summary: string = '';
-	export let image: any = {};
+	let { text = '', open = $bindable(), summary = '', image } = $props();
 
 	let dialogRef: HTMLDialogElement;
 	let imageSource: any = null;
 
 	const storage = getStorage();
 
-	const getImage = (image: string) => {
-		console.log(image);
-	};
 	const handleOpenDialog = () => {
 		document.getElementsByTagName('body')[0].style.overflow = 'hidden';
 		dialogRef.showModal();
@@ -22,18 +16,22 @@
 		document.getElementsByTagName('body')[0].style.overflow = 'auto';
 		dialogRef.close();
 	};
+	$effect(() => {
+		let pathReference = null;
+		console.log(image);
+		if (image) pathReference = ref(storage, image);
+		getBlob(pathReference).then((res) => console.log(res));
+	});
 
-	$: {
+	$effect(() => {
 		if (open && dialogRef) {
 			handleOpenDialog();
 		} else if (!open && dialogRef) {
 			handleCloseDialog();
 		}
-	}
-	$: {
-		getImage(image);
-	}
-	$: {
+	});
+
+	$effect(() => {
 		if (dialogRef) {
 			dialogRef.addEventListener('click', function (event) {
 				var rect = dialogRef.getBoundingClientRect();
@@ -48,7 +46,7 @@
 				}
 			});
 		}
-	}
+	});
 </script>
 
 <dialog class="backdrop:backdrop-blur-sm bg-base-300 h-3/4 rounded-box" bind:this={dialogRef}>
@@ -81,7 +79,6 @@
 				{text}
 			</p>
 			<h2>Source Image</h2>
-			<img src={imageSource} alt="source" id="sourceImg" />
 		</div>
 	</div>
 </dialog>
