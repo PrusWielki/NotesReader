@@ -1,10 +1,19 @@
 <script lang="ts">
+	import { getDownloadURL, getStorage, ref } from 'firebase/storage';
+
 	export let text: string;
 	export let open: boolean;
 	export let summary: string = '';
 	export let image: any = {};
 
 	let dialogRef: HTMLDialogElement;
+	let imageSource: any = null;
+
+	const storage = getStorage();
+
+	const getImage = (image: string) => {
+		console.log(image);
+	};
 	const handleOpenDialog = () => {
 		document.getElementsByTagName('body')[0].style.overflow = 'hidden';
 		dialogRef.showModal();
@@ -20,6 +29,9 @@
 		} else if (!open && dialogRef) {
 			handleCloseDialog();
 		}
+	}
+	$: {
+		getImage(image);
 	}
 	$: {
 		if (dialogRef) {
@@ -69,7 +81,7 @@
 				{text}
 			</p>
 			<h2>Source Image</h2>
-			<img src={image} alt="source" />
+			<img src={imageSource} alt="source" id="sourceImg" />
 		</div>
 	</div>
 </dialog>
