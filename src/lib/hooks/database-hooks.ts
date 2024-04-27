@@ -16,8 +16,7 @@ export const pushImage = async (image: File) => {
 			const bodyToSend = {
 				image: {
 					content: (reader.result as string).split('base64,')[1]
-				},
-				features: [{ type: 'TEXT_DETECTION' }]
+				}
 			};
 			fetch(import.meta.env.VITE_HTTPFUNCTION_URL, {
 				method: 'POST',

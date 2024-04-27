@@ -20,8 +20,10 @@ const client = new vision.ImageAnnotatorClient();
 // https://firebase.google.com/docs/functions/typescript
 
 export const extractText = onRequest({ cors: true }, async (request, response) => {
-	logger.info(request.body);
-	const value = await client.annotateImage(request.body);
-	logger.info('Hello logs!', { structuredData: true });
-	response.send(value);
+	// const value = await client.annotateImage(request.body);
+	const [textDetections] = await client.textDetection(request.body);
+	const fullTextAnnotation = textDetections.fullTextAnnotation;
+	logger.info(fullTextAnnotation?.text);
+
+	response.send({ text: fullTextAnnotation?.text });
 });
