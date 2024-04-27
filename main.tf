@@ -337,7 +337,7 @@ resource "google_cloudfunctions2_function" "default" {
     google_project_iam_member.event_receiving,
     google_project_iam_member.artifactregistry_reader,
   ]
-  name        = "function"
+  name        = "TriggerFunction"
   location    = var.region
   description = "a new function"
 
@@ -377,6 +377,88 @@ resource "google_cloudfunctions2_function" "default" {
       value     = google_firebase_storage_bucket.default-bucket.bucket_id
     }
   }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+# HTTP trigerred cloud function
+
+
+
+
+
+
+
+
+resource "google_storage_bucket" "http_storage_bucket" {
+  name                        = "${random_id.default.hex}-gcf-http-source" # Every bucket name must be globally unique
+  location                    = var.region
+  uniform_bucket_level_access = true
+}
+
+data "archive_file" "http_archive" {
+  type        = "zip"
+  output_path = "/tmp/function-http-source.zip"
+  source_dir  = var.cloud_function_http_path
+}
+resource "google_storage_bucket_object" "http_storage_bucket_object" {
+  name   = "function-http-source.zip"
+  bucket = google_storage_bucket.http_storage_bucket.name
+  source = data.archive_file.http_archive.output_path # Add path to the zipped function source code
+}
+
+
+
+
+
+
+
+
+
+
+
+
+resource "google_cloudfunctions2_function" "http_function" {
+  name        = "function-v2"
+  location    = var.region
+  description = "http trigerred ocr function"
+
+  build_config {
+    runtime     = "nodejs20"
+    entry_point = var.cloud_function_http_entry_point # Set the entry point
+    source {
+      storage_source {
+        bucket = google_storage_bucket.http_storage_bucket.name
+        object = google_storage_bucket_object.http_storage_bucket_object.name
+      }
+    }
+  }
+
+  service_config {
+    available_memory   = "256M"
+    timeout_seconds    = 60
+  }
+}
+
+resource "google_cloud_run_service_iam_member" "member" {
+  location = google_cloudfunctions2_function.http_function.location
+  service  = google_cloudfunctions2_function.http_function.name
+  role     = "roles/run.invoker"
+  member   = "allUsers"
+}
+
+output "function_uri" {
+  value = google_cloudfunctions2_function.default.service_config[0].uri
 }
 
 
