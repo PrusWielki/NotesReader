@@ -9,9 +9,9 @@
 
 import { onRequest } from 'firebase-functions/v2/https';
 import * as logger from 'firebase-functions/logger';
-import vision from '@google-cloud/vision';
+// import vision from '@google-cloud/vision';
 
-const client = new vision.ImageAnnotatorClient();
+// const client = new vision.ImageAnnotatorClient();
 
 // Start writing functions
 // https://firebase.google.com/docs/functions/typescript
