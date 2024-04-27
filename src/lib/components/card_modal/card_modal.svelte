@@ -1,12 +1,28 @@
 <script lang="ts">
-	import { getStorage, ref, getBlob } from 'firebase/storage';
+	import { getStorage, ref, getBytes } from 'firebase/storage';
 
-	let { text = '', open = $bindable(), summary = '', image } = $props();
+	let { text = '', open = $bindable(), summary = '', image = '' } = $props();
 
 	let dialogRef: HTMLDialogElement;
-	let imageSource: any = null;
+	let imageSource: any = $state(null);
 
+	function _arrayBufferToBase64(buffer: ArrayBuffer) {
+		var binary = '';
+		var bytes = new Uint8Array(buffer);
+		var len = bytes.byteLength;
+		for (var i = 0; i < len; i++) {
+			binary += String.fromCharCode(bytes[i]);
+		}
+		return window.btoa(binary);
+	}
 	const storage = getStorage();
+
+	const getImage = (image: string) => {
+		const pathReference = ref(storage, image);
+		getBytes(pathReference).then((res) => {
+			imageSource = 'data:image/jpg;base64, ' + _arrayBufferToBase64(res);
+		});
+	};
 
 	const handleOpenDialog = () => {
 		document.getElementsByTagName('body')[0].style.overflow = 'hidden';
@@ -17,10 +33,7 @@
 		dialogRef.close();
 	};
 	$effect(() => {
-		let pathReference = null;
-		console.log(image);
-		if (image) pathReference = ref(storage, image);
-		getBlob(pathReference).then((res) => console.log(res));
+		if (image) getImage(image);
 	});
 
 	$effect(() => {
@@ -79,6 +92,7 @@
 				{text}
 			</p>
 			<h2>Source Image</h2>
+			<img src={imageSource} alt="Notes" />
 		</div>
 	</div>
 </dialog>

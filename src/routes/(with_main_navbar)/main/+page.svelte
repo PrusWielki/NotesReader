@@ -7,7 +7,7 @@
 
 	let openModal = false;
 	let currentText = '';
-	let currentImage = {};
+	let currentImage = '';
 	let currentSummary = '';
 
 	const db = getFirestore();
