@@ -23,6 +23,6 @@ Or:
 
 - [ ] Create necessary cloud functions code - I have no idea how to make it event driven, cause when you want to trigger the function on a bucket upload event then you don't have access to who actually uploaded that file so it's hard to associate a user with a processed file and in order to allow vision api access to that bucket it would need to be made public it seems. So I think it's better to trigger it over http, by sending the image and then the function should return the extracted text and summary
 - [ ] Add automatic auth setup to Terraform -that actually might not be possible :()
-- [ ] Write API in Sveltekit or maybe just communicate via client
+- [x] Write API in Sveltekit or maybe just communicate via client
 - [ ] Connect the main page to the realtime database
 - [ ] Connect modal to the realtime database

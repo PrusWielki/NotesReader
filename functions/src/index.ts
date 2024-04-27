@@ -1,8 +1,8 @@
 import { onRequest } from 'firebase-functions/v2/https';
 import * as logger from 'firebase-functions/logger';
 import { setGlobalOptions } from 'firebase-functions/v2';
-
 import { VertexAI } from '@google-cloud/vertexai';
+import vision from '@google-cloud/vision';
 
 const project = 'notesreader11';
 const location = 'europe-west1';
@@ -17,11 +17,11 @@ const generativeModel = vertexAI.getGenerativeModel({
 });
 
 setGlobalOptions({ region: 'europe-west1' });
-import vision from '@google-cloud/vision';
 
 const client = new vision.ImageAnnotatorClient();
 
 export const extractText = onRequest({ cors: true }, async (request, response) => {
+	logger.info(request.body);
 	const [textDetections] = await client.textDetection(request.body);
 	const fullTextAnnotation = textDetections.fullTextAnnotation;
 
@@ -34,8 +34,13 @@ export const extractText = onRequest({ cors: true }, async (request, response) =
 	};
 	const result = await generativeModel.generateContent(requestVertex);
 	const responseVertex = result.response;
+	let responseText = '';
+	if (responseVertex?.candidates)
+		responseVertex.candidates[0].content.parts.forEach((part) => (responseText += part.text));
 
-	logger.info(JSON.stringify(responseVertex));
+	logger.info(responseText);
 
-	response.send({ text: fullTextAnnotation?.text });
+	// Last thing is to save the full text, summary text and image to a db
+
+	response.send({ text: fullTextAnnotation?.text, summary: responseText });
 });

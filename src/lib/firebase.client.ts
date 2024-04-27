@@ -14,7 +14,8 @@ const firebaseConfig = {
 	appId: import.meta.env.VITE_FIREBASE_APP_ID,
 	useEmulator: import.meta.env.VITE_FIREBASE_USE_EMULATOR === 'true',
 	authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-	storageBucket: import.meta.env.VITE_STORAGE_BUCKET_DEFUALT
+	storageBucket: import.meta.env.VITE_STORAGE_BUCKET_DEFUALT,
+	projectId: import.meta.env.VITE_PROJECT_ID
 };
 
 export const initializeFirebase = () => {

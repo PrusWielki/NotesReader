@@ -1,5 +1,24 @@
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
 import { showNotification } from './show-notification';
+import { collection, getFirestore, addDoc } from 'firebase/firestore';
+
+const saveDataToDb = async (image: File, text: string, summary: string, fileExt: string) => {
+	const storage = getStorage();
+	const filename = crypto.randomUUID() + '.' + fileExt;
+
+	const storageRef = ref(storage, filename);
+	await uploadBytes(storageRef, image);
+	const db = getFirestore();
+	const data = {
+		imageName: filename,
+		text: text,
+		summary: summary
+	};
+	// Add a new document in collection "cities" with ID 'LA'
+	const collectionRef = collection(db, 'userData');
+	addDoc(collectionRef, data);
+	showNotification('Uploaded!', 4000, 'Success');
+};
 
 export const pushImage = async (image: File) => {
 	const fileExt = image.name.split('.').pop();
@@ -24,7 +43,11 @@ export const pushImage = async (image: File) => {
 					'Content-Type': 'application/json'
 				},
 				body: JSON.stringify(bodyToSend)
-			}).then((res) => console.log(res));
+			}).then((res) =>
+				res.json().then((result) => {
+					saveDataToDb(image, result.text, result.summary, fileExt);
+				})
+			);
 		} else showNotification("Couldn't process file!", 4000, 'Failure');
 	};
 
@@ -41,16 +64,4 @@ export const pushImage = async (image: File) => {
 		})
 	);
  */
-	/* 	const storage = getStorage();
-	const filename = crypto.randomUUID() + '.' + fileExt;
-
-	const storageRef = ref(storage, filename);
-	uploadBytes(storageRef, image).then((snapshot) => {
-		showNotification('Uploaded!', 4000, 'Success');
-		fetch(import.meta.env.VITE_HTTPFUNCTION_URL, {
-			method: 'POST',
-
-			body: 'gs://' + import.meta.env.VITE_STORAGE_BUCKET_DEFUALT + '/' + filename
-		}).then((res) => console.log(res));
-	}); */
 };
