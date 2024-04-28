@@ -8,7 +8,7 @@
 			<a href="/" class="btn btn-ghost text-xl font-semibold">Notes Reader</a>
 		</div>
 
-		<div class="navbar-end gap-4">
+		<div class="navbar-end gap-2">
 			<ThemePicker class="" />
 			<a href="/login" class="btn btn-outline btn-secondary btn-sm text-primary-content">Login</a>
 		</div>
