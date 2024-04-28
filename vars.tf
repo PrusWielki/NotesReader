@@ -23,18 +23,5 @@ variable "billing_account" {
   default = ""
 }
 
-variable "document_ai_region" {
-  type = string
-  default = "eu"
 
-}
 
-variable "cloud_function_path" {
-  type = string
-  default = "./CloudFunctions/Main"
-}
-
-variable "cloud_function_entry_point" {
-  type = string
-  default = "helloPubSub"
-}
