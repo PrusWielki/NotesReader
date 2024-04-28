@@ -10,16 +10,18 @@
 
 	let loading: boolean = true;
 	let loggedIn: boolean = false;
+	let uid: string | null = null;
 
 	session.subscribe((cur: any) => {
 		loading = cur?.loading;
 		loggedIn = cur?.loggedIn;
+		uid = cur?.user.uid;
 	});
 
 	onMount(async () => {
 		const user: any = await data.getAuthUser();
 
-		const loggedIn = !!user && user?.emailVerified;
+		const loggedIn = !!user; //&& user?.emailVerified;
 		session.update((cur: any) => {
 			loading = false;
 			return {
@@ -30,7 +32,7 @@
 			};
 		});
 
-		if (loggedIn) {
+		if (loggedIn && uid) {
 			goto('/main');
 		}
 	});
