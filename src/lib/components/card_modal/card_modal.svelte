@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { getStorage, ref, getBytes } from 'firebase/storage';
+	import { app } from '$lib/firebase.client';
 
 	let { text = '', open = $bindable(), summary = '', image = '' } = $props();
 
@@ -16,10 +17,11 @@
 		}
 		return window.btoa(binary);
 	}
-	const storage = getStorage();
+	let storage = null;
+	if (app) storage = getStorage();
 
 	const getImage = (image: string) => {
-		if (image) {
+		if (image && storage) {
 			const pathReference = ref(storage, image);
 			getBytes(pathReference).then((res) => {
 				imageSource = 'data:image/jpg;base64, ' + _arrayBufferToBase64(res);

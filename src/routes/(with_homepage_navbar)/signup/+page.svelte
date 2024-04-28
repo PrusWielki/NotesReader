@@ -124,7 +124,11 @@
 		</label>
 		<button type="submit" class="btn w-full btn-primary text-lg">Sign up</button>
 		<p>Or</p>
-		<button on:click={loginWithGoogle} class="btn w-full btn-neutral btn-outline gap-1 sm:gap-2">
+		<button
+			type="button"
+			on:click={loginWithGoogle}
+			class="btn w-full btn-neutral btn-outline gap-1 sm:gap-2"
+		>
 			<p
 				class="py-1 font-bold bg-[linear-gradient(to_right,theme(colors.red.500),theme(colors.yellow.500),theme(colors.green.500),theme(colors.blue.500))] inline-block text-transparent bg-clip-text"
 			>

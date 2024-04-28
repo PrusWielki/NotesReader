@@ -19,21 +19,25 @@
 	});
 
 	onMount(async () => {
-		const user: any = await data.getAuthUser();
+		try {
+			const user: any = await data.getAuthUser();
 
-		const loggedIn = !!user; //&& user?.emailVerified;
-		session.update((cur: any) => {
-			loading = false;
-			return {
-				...cur,
-				user,
-				loggedIn,
-				loading: false
-			};
-		});
+			const loggedIn = !!user; //&& user?.emailVerified;
+			session.update((cur: any) => {
+				loading = false;
+				return {
+					...cur,
+					user,
+					loggedIn,
+					loading: false
+				};
+			});
 
-		if (loggedIn && uid) {
-			goto('/main');
+			if (loggedIn && uid) {
+				goto('/main');
+			}
+		} catch (ex) {
+			goto('/');
 		}
 	});
 </script>

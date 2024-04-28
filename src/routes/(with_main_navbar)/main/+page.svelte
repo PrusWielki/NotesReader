@@ -5,13 +5,19 @@
 	import { collection, getFirestore, onSnapshot, query, where } from 'firebase/firestore';
 	import type { QuerySnapshot } from 'firebase/firestore/lite';
 	import { session } from '$lib/session';
+	import { app } from '$lib/firebase.client';
+	import { onDestroy } from 'svelte';
 
 	let uid: string | null | undefined = null;
 
 	session.subscribe((value) => (uid = value?.user?.uid));
+	let db = null;
+	let collectionRef = null;
 
-	const db = getFirestore();
-	const collectionRef = collection(db, 'userData');
+	if (app) {
+		db = getFirestore();
+		collectionRef = collection(db, 'userData');
+	}
 
 	let queryResult: QuerySnapshot | null = null;
 
@@ -19,11 +25,12 @@
 	let currentText = '';
 	let currentImage = '';
 	let currentSummary = '';
+	let unsubscribe: any = null;
 
 	const getData = (uid: string | null | undefined) => {
-		if (uid && uid !== '') {
+		if (uid && uid !== '' && collectionRef) {
 			const q = query(collectionRef, where('userId', '==', uid));
-			const unsubscribe = onSnapshot(q, (snapshot) => {
+			unsubscribe = onSnapshot(q, (snapshot) => {
 				queryResult = snapshot;
 			});
 		}
@@ -32,6 +39,10 @@
 	$: {
 		getData(uid);
 	}
+
+	onDestroy(() => {
+		if (unsubscribe) unsubscribe();
+	});
 </script>
 
 <div class="w-full h-[100dvh]">
