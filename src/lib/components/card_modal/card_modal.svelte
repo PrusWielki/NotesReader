@@ -5,6 +5,7 @@
 
 	let dialogRef: HTMLDialogElement;
 	let imageSource: any = $state(null);
+	let loading: boolean = $state(true);
 
 	function _arrayBufferToBase64(buffer: ArrayBuffer) {
 		var binary = '';
@@ -21,6 +22,7 @@
 		const pathReference = ref(storage, image);
 		getBytes(pathReference).then((res) => {
 			imageSource = 'data:image/jpg;base64, ' + _arrayBufferToBase64(res);
+			loading = false;
 		});
 	};
 
@@ -40,6 +42,7 @@
 		if (open && dialogRef) {
 			handleOpenDialog();
 		} else if (!open && dialogRef) {
+			loading = true;
 			handleCloseDialog();
 		}
 	});
@@ -92,7 +95,11 @@
 				{text}
 			</p>
 			<h2>Source Image</h2>
-			<img src={imageSource} alt="Notes" />
+			{#if !loading}
+				<img src={imageSource} alt="Notes" />
+			{:else}
+				loading...
+			{/if}
 		</div>
 	</div>
 </dialog>

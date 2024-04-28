@@ -4,10 +4,12 @@ import type { FirebaseApp } from 'firebase/app';
 import type { Firestore } from 'firebase/firestore';
 import type { Auth } from 'firebase/auth';
 import { browser } from '$app/environment';
+import { getFunctions, type Functions } from 'firebase/functions';
 
 export let db: Firestore;
 export let app: FirebaseApp;
 export let auth: Auth;
+export let functions: Functions;
 
 const firebaseConfig = {
 	apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -25,6 +27,7 @@ export const initializeFirebase = () => {
 	if (!app) {
 		app = initializeApp(firebaseConfig);
 		auth = getAuth(app);
+		functions = getFunctions(app, import.meta.env.VITE_CLOUDFUNCTION_REGION);
 
 		if (firebaseConfig.useEmulator) {
 			connectAuthEmulator(auth, 'http://127.0.0.1:9099');

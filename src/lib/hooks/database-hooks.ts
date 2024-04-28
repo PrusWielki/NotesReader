@@ -1,6 +1,8 @@
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
 import { showNotification } from './show-notification';
 import { collection, getFirestore, addDoc } from 'firebase/firestore';
+import { getFunctions, httpsCallable } from 'firebase/functions';
+import { functions } from '$lib/firebase.client';
 
 const saveDataToDb = async (
 	image: File,
@@ -43,7 +45,15 @@ export const pushImage = async (image: File, uid: string) => {
 					content: (reader.result as string).split('base64,')[1]
 				}
 			};
-			fetch(import.meta.env.VITE_HTTPFUNCTION_URL, {
+			const extractText = httpsCallable(functions, 'extractText');
+			extractText({
+				visionData: bodyToSend,
+				imageName: image.name,
+				imageType: (reader.result as string).split('base64,')[0]
+			}).then((result) => {
+				console.log(result);
+			});
+			/* 			fetch(import.meta.env.VITE_HTTPFUNCTION_URL, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
@@ -51,9 +61,10 @@ export const pushImage = async (image: File, uid: string) => {
 				body: JSON.stringify(bodyToSend)
 			}).then((res) =>
 				res.json().then((result) => {
+					
 					saveDataToDb(image, result.text, result.summary, fileExt, uid);
 				})
-			);
+			); */
 		} else showNotification("Couldn't process file!", 4000, 'Failure');
 	};
 };
