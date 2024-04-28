@@ -3,7 +3,7 @@
 	import CardModal from '$lib/components/card_modal/card_modal.svelte';
 	import PlusButton from '$lib/components/buttons/plus_button.svelte';
 	import { collection, getFirestore, onSnapshot, query, where } from 'firebase/firestore';
-	import type { QuerySnapshot } from 'firebase/firestore/lite';
+	import type { QueryDocumentSnapshot, QuerySnapshot } from 'firebase/firestore/lite';
 	import { session } from '$lib/session';
 	import { app } from '$lib/firebase.client';
 	import { onDestroy } from 'svelte';
@@ -19,7 +19,7 @@
 		collectionRef = collection(db, 'userData');
 	}
 
-	let queryResult: QuerySnapshot | null = null;
+	let queryResult: QueryDocumentSnapshot[] | null = null;
 
 	let openModal = false;
 	let currentText = '';
@@ -31,7 +31,7 @@
 		if (uid && uid !== '' && collectionRef) {
 			const q = query(collectionRef, where('userId', '==', uid));
 			unsubscribe = onSnapshot(q, (snapshot) => {
-				queryResult = snapshot;
+				queryResult = snapshot.docs.reverse();
 			});
 		}
 	};
@@ -50,7 +50,7 @@
 		<div class="flex flex-row flex-wrap gap-2 justify-center">
 			<!-- <button class="btn-primary btn">Add a new note</button> -->
 			{#if queryResult}
-				{#each queryResult.docs as doc}
+				{#each queryResult as doc}
 					{@const { text, summary, imageName } = doc.data()}
 
 					<button
