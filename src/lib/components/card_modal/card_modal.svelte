@@ -19,11 +19,13 @@
 	const storage = getStorage();
 
 	const getImage = (image: string) => {
-		const pathReference = ref(storage, image);
-		getBytes(pathReference).then((res) => {
-			imageSource = 'data:image/jpg;base64, ' + _arrayBufferToBase64(res);
-			loading = false;
-		});
+		if (image) {
+			const pathReference = ref(storage, image);
+			getBytes(pathReference).then((res) => {
+				imageSource = 'data:image/jpg;base64, ' + _arrayBufferToBase64(res);
+				loading = false;
+			});
+		}
 	};
 
 	const handleOpenDialog = () => {
@@ -35,6 +37,7 @@
 		dialogRef.close();
 	};
 	$effect(() => {
+		open;
 		if (image) getImage(image);
 	});
 
@@ -65,8 +68,11 @@
 	});
 </script>
 
-<dialog class="backdrop:backdrop-blur-sm bg-base-300 h-3/4 rounded-box" bind:this={dialogRef}>
-	<div class="relative w-full h-full max-w-md sm:max-w-xl py-10">
+<dialog
+	class="backdrop:backdrop-blur-sm bg-base-300 sm:h-3/4 h-full rounded-box"
+	bind:this={dialogRef}
+>
+	<div class="relative w-full h-full sm:max-w-xl py-10">
 		<button
 			on:click={() => {
 				handleCloseDialog();

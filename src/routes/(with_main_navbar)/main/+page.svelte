@@ -8,7 +8,7 @@
 
 	let uid: string | null | undefined = null;
 
-	session.subscribe((value) => (uid = value.user?.uid));
+	session.subscribe((value) => (uid = value?.user?.uid));
 
 	const db = getFirestore();
 	const collectionRef = collection(db, 'userData');
