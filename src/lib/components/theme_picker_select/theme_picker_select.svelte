@@ -6,7 +6,8 @@
 	export { className as class };
 	let theme: string | null = 'theme';
 	if (browser) {
-		theme = localStorage.getItem('theme');
+		const tempTheme = localStorage.getItem('theme');
+		if (tempTheme) theme = tempTheme;
 	}
 	const onThemeSelect = (selected: string) => {
 		theme = selected;
@@ -26,6 +27,8 @@
 		if (selectedTheme) onThemeSelect(selectedTheme);
 	}}
 >
+	<option class="bg-base-100" disabled value="theme">Theme</option>
+
 	{#each themes as themeName}
 		<option class="bg-base-100" value={themeName}>{themeName}</option>
 	{/each}
