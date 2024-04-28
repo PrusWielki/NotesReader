@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { pushImage } from '$lib/hooks/database-hooks';
+	export let uid: string;
 </script>
 
 <input
@@ -8,7 +9,7 @@
 	type="file"
 	name="filename"
 	on:change={(e) => {
-		if (e.currentTarget?.files) pushImage(e.currentTarget.files[0]);
+		if (e.currentTarget?.files) pushImage(e.currentTarget.files[0], uid);
 	}}
 />
 <button

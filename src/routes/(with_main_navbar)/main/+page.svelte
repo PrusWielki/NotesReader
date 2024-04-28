@@ -2,22 +2,39 @@
 	import Card from '$lib/components/card/card.svelte';
 	import CardModal from '$lib/components/card_modal/card_modal.svelte';
 	import PlusButton from '$lib/components/buttons/plus_button.svelte';
-	import { collection, getFirestore, getDocs, onSnapshot } from 'firebase/firestore';
+	import { collection, getFirestore, onSnapshot, query, where } from 'firebase/firestore';
 	import type { QuerySnapshot } from 'firebase/firestore/lite';
+	import type { PageData } from './$types';
+	import type { User } from 'firebase/auth';
 
-	let openModal = false;
-	let currentText = '';
-	let currentImage = '';
-	let currentSummary = '';
+	export let data: PageData;
+
+	let uid: string = '';
+
+	data.getAuthUser().then((result) => (uid = (result as User).uid));
 
 	const db = getFirestore();
 	const collectionRef = collection(db, 'userData');
 
 	let queryResult: QuerySnapshot | null = null;
 
-	const unsubscribe = onSnapshot(collectionRef, (snapshot) => {
-		queryResult = snapshot;
-	});
+	let openModal = false;
+	let currentText = '';
+	let currentImage = '';
+	let currentSummary = '';
+
+	const getData = (uid: string) => {
+		if (uid !== '') {
+			const q = query(collectionRef, where('userId', '==', uid));
+			const unsubscribe = onSnapshot(q, (snapshot) => {
+				queryResult = snapshot;
+			});
+		}
+	};
+
+	$: {
+		getData(uid);
+	}
 </script>
 
 <div class="w-full h-[100dvh]">
@@ -50,6 +67,6 @@
 		/>
 	</div>
 	<div class="fixed lg:hidden block right-6 bottom-[5lvh]">
-		<PlusButton />
+		<PlusButton {uid} />
 	</div>
 </div>

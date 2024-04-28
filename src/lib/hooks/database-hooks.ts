@@ -2,7 +2,13 @@ import { getStorage, ref, uploadBytes } from 'firebase/storage';
 import { showNotification } from './show-notification';
 import { collection, getFirestore, addDoc } from 'firebase/firestore';
 
-const saveDataToDb = async (image: File, text: string, summary: string, fileExt: string) => {
+const saveDataToDb = async (
+	image: File,
+	text: string,
+	summary: string,
+	fileExt: string,
+	uid: string
+) => {
 	const storage = getStorage();
 	const filename = crypto.randomUUID() + '.' + fileExt;
 
@@ -12,14 +18,15 @@ const saveDataToDb = async (image: File, text: string, summary: string, fileExt:
 	const data = {
 		imageName: filename,
 		text: text,
-		summary: summary
+		summary: summary,
+		userId: uid
 	};
 	const collectionRef = collection(db, 'userData');
 	addDoc(collectionRef, data);
 	showNotification('Uploaded!', 4000, 'Success');
 };
 
-export const pushImage = async (image: File) => {
+export const pushImage = async (image: File, uid: string) => {
 	const fileExt = image.name.split('.').pop();
 	if (fileExt !== 'png' && fileExt !== 'jpg' && fileExt !== 'pdf') {
 		showNotification('File should be .png, .jpg !', 4000, 'Failure');
@@ -44,7 +51,7 @@ export const pushImage = async (image: File) => {
 				body: JSON.stringify(bodyToSend)
 			}).then((res) =>
 				res.json().then((result) => {
-					saveDataToDb(image, result.text, result.summary, fileExt);
+					saveDataToDb(image, result.text, result.summary, fileExt, uid);
 				})
 			);
 		} else showNotification("Couldn't process file!", 4000, 'Failure');
