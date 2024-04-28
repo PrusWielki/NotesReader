@@ -11,8 +11,8 @@
 	let loggedIn = false;
 	if (browser)
 		session.subscribe((value) => {
-			if (!value?.loggedIn) goto('/');
-			else loggedIn = true;
+			if (value?.loggedIn === false) goto('/');
+			else if (value && value.loggedIn === true) loggedIn = true;
 		});
 </script>
 
