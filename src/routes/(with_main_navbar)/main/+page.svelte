@@ -4,14 +4,11 @@
 	import PlusButton from '$lib/components/buttons/plus_button.svelte';
 	import { collection, getFirestore, onSnapshot, query, where } from 'firebase/firestore';
 	import type { QuerySnapshot } from 'firebase/firestore/lite';
-	import type { PageData } from './$types';
-	import type { User } from 'firebase/auth';
+	import { session } from '$lib/session';
 
-	export let data: PageData;
+	let uid: string | null | undefined = null;
 
-	let uid: string = '';
-
-	data.getAuthUser().then((result) => (uid = (result as User).uid));
+	session.subscribe((value) => (uid = value.user?.uid));
 
 	const db = getFirestore();
 	const collectionRef = collection(db, 'userData');
@@ -23,8 +20,8 @@
 	let currentImage = '';
 	let currentSummary = '';
 
-	const getData = (uid: string) => {
-		if (uid !== '') {
+	const getData = (uid: string | null | undefined) => {
+		if (uid && uid !== '') {
 			const q = query(collectionRef, where('userId', '==', uid));
 			const unsubscribe = onSnapshot(q, (snapshot) => {
 				queryResult = snapshot;
