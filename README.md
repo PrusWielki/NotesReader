@@ -24,8 +24,10 @@ VITE_CLOUDFUNCTION_REGION = europe-west1
 
 5. Edit functions/src/consts.ts to comply with the values entered in .env
 
-6. Run `firebase deploy --only functions`
+6. Enable Authentication by email and Google in Firebase console
 
-7. Run `gsutil cors set cors.json gs://notesreader.appspot.com`
+7. Run `firebase deploy --only functions`
 
-8. Run `firebase deploy`
+8. Run `gsutil cors set cors.json gs://notesreader.appspot.com`
+
+9. Run `firebase deploy`
