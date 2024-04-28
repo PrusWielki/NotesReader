@@ -18,8 +18,12 @@
 			<div class="alert alert-success px-10">
 				<p>{message}</p>
 			</div>
-		{:else}
+		{:else if messageType == 'Failure'}
 			<div class="alert alert-error px-10">
+				<p>{message}</p>
+			</div>
+		{:else}
+			<div class="alert alert-info px-10">
 				<p>{message}</p>
 			</div>
 		{/if}

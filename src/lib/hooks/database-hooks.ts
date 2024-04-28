@@ -1,7 +1,7 @@
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
 import { showNotification } from './show-notification';
 import { collection, getFirestore, addDoc } from 'firebase/firestore';
-import { getFunctions, httpsCallable } from 'firebase/functions';
+import { httpsCallable } from 'firebase/functions';
 import { functions } from '$lib/firebase.client';
 
 const saveDataToDb = async (
@@ -30,7 +30,7 @@ const saveDataToDb = async (
 
 export const pushImage = async (image: File, uid: string) => {
 	const fileExt = image.name.split('.').pop();
-	if (fileExt !== 'png' && fileExt !== 'jpg' && fileExt !== 'pdf') {
+	if (fileExt !== 'png' && fileExt !== 'jpg') {
 		showNotification('File should be .png, .jpg !', 4000, 'Failure');
 		return;
 	}
@@ -46,12 +46,13 @@ export const pushImage = async (image: File, uid: string) => {
 				}
 			};
 			const extractText = httpsCallable(functions, 'extractText');
+			showNotification('Processing...', 20000, 'Info');
 			extractText({
 				visionData: bodyToSend,
 				imageName: image.name,
 				imageType: (reader.result as string).split('base64,')[0]
 			}).then((result) => {
-				console.log(result);
+				showNotification('File processed!', 1000, 'Success');
 			});
 			/* 			fetch(import.meta.env.VITE_HTTPFUNCTION_URL, {
 				method: 'POST',
