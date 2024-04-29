@@ -20,8 +20,8 @@
 	<div class="w-full fixed top-0 font-montserrat z-10 backdrop-blur-md bg-transparent">
 		<div class="navbar max-w-screen-xl mx-auto px-4">
 			<div class="navbar-start">
-				<div class="dropdown">
-					<div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+				<details class="dropdown">
+					<summary tabindex="0" class="btn btn-ghost lg:hidden">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							class="h-5 w-5"
@@ -35,7 +35,7 @@
 								d="M4 6h16M4 12h8m-8 6h16"
 							/></svg
 						>
-					</div>
+					</summary>
 					<ul
 						tabindex="0"
 						class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow gap-4 bg-base-200 rounded-box w-52"
@@ -57,7 +57,7 @@
 							>
 						</li>
 					</ul>
-				</div>
+				</details>
 				<a href="/" class="btn btn-ghost text-xl font-semibold">Notes Reader</a>
 				<!-- 				<input
 					class="input input-bordered input-secondary block lg:hidden"
