@@ -63,7 +63,8 @@ export const extractText = onCall({ cors: true }, async (request) => {
 		text: fullTextAnnotation?.text,
 		summary: responseText,
 		userId: request.auth?.uid,
-		imageName: filename
+		imageName: filename,
+		date: Date.now()
 	});
 
 	return { text: fullTextAnnotation?.text, summary: responseText };

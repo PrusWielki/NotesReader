@@ -2,7 +2,7 @@
 	import Card from '$lib/components/card/card.svelte';
 	import CardModal from '$lib/components/card_modal/card_modal.svelte';
 	import PlusButton from '$lib/components/buttons/plus_button.svelte';
-	import { collection, getFirestore, onSnapshot, query, where } from 'firebase/firestore';
+	import { collection, getFirestore, onSnapshot, orderBy, query, where } from 'firebase/firestore';
 	import type { QueryDocumentSnapshot, QuerySnapshot } from 'firebase/firestore/lite';
 	import { session } from '$lib/session';
 	import { app } from '$lib/firebase.client';
@@ -29,7 +29,7 @@
 
 	const getData = (uid: string | null | undefined) => {
 		if (uid && uid !== '' && collectionRef) {
-			const q = query(collectionRef, where('userId', '==', uid));
+			const q = query(collectionRef, where('userId', '==', uid), orderBy('date'));
 			unsubscribe = onSnapshot(q, (snapshot) => {
 				queryResult = snapshot.docs.reverse();
 			});
@@ -44,6 +44,8 @@
 		if (unsubscribe) unsubscribe();
 	});
 </script>
+
+f
 
 <div class="w-full h-[100dvh]">
 	<div class="max-w-screen-xl mx-auto px-4 py-20">
