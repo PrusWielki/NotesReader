@@ -167,6 +167,25 @@ resource "google_firestore_database" "default" {
 }
 
 
+resource "google_firestore_index" "userDataIndex" {
+  project     = google_firebase_project.default.project
+  database   = google_firestore_database.default.name
+  collection = "userData"
+
+  fields {
+    field_path = "userId"
+    order      = "ASCENDING"
+  }
+  fields {
+    field_path = "date"
+    order      = "ASCENDING"
+  }
+
+
+
+
+}
+
 
 # Enable required APIs for Cloud Storage for Firebase.
 resource "google_project_service" "storage" {
