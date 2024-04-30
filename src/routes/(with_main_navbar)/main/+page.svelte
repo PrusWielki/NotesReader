@@ -45,8 +45,6 @@
 	});
 </script>
 
-f
-
 <div class="w-full h-[100dvh]">
 	<div class="max-w-screen-xl mx-auto px-4 py-20">
 		<div class="flex flex-row flex-wrap gap-2 justify-center">
