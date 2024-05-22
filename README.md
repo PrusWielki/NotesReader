@@ -1,4 +1,4 @@
-## App written in Sveltekit and deployed on Google Cloud Platform with Cloud Functions allowing for OCR from images and text summarization
+## App written in Sveltekit and deployed on Google Cloud Platform with Cloud Functions allowing for OCR from images and text summarization, developed under the supervision of Google
 
 ## How to run
 
