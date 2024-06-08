@@ -7,8 +7,8 @@
 2. Create a .env in main directory with following fields:
 
 ```ts
-VITE_FIREBASE_API_KEY= API KEY HERE
-VITE_FIREBASE_APP_ID= APP ID HERE
+VITE_FIREBASE_API_KEY= API KEY HERE // After step 3.
+VITE_FIREBASE_APP_ID= APP ID HERE // After step 3.
 VITE_FIREBASE_USE_EMULATOR=false
 VITE_FIREBASE_AUTH_DOMAIN=notesreader.firebaseapp.com
 VITE_STORAGE_BUCKET_DEFUALT=notesreader.appspot.com
@@ -20,9 +20,9 @@ VITE_CLOUDFUNCTION_REGION = europe-west1
 
 3. Run `terraform init` and `terraform apply`
 
-4. Fill the missing values in .env
+4. Fill the missing values in .env (API KEY and APP ID)
 
-5. Edit functions/src/consts.ts to comply with the values entered in .env
+5. Edit functions/src/consts.ts to comply with the values entered in .env (PROJECT_NAME)
 
 6. Enable Authentication by email and Google in Firebase console
 
@@ -30,4 +30,6 @@ VITE_CLOUDFUNCTION_REGION = europe-west1
 
 8. Run `gsutil cors set cors.json gs://notesreader.appspot.com`
 
-9. Run `firebase deploy`
+9. Run `firebase experiments:enable webframeworks`
+
+10. Make sure you are on Node 20 and Run `firebase deploy`
