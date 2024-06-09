@@ -95,7 +95,7 @@
 				</g></svg
 			>
 		</button>
-		<div class="h-full overflow-auto px-10 prose prose-h2:first-of-type:mt-0">
+		<div class="h-full overflow-auto leanscroll px-10 prose prose-h2:first-of-type:mt-0">
 			<h2>Summary</h2>
 			<p>{summary}</p>
 			<h2>Content</h2>

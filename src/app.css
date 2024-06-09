@@ -2,3 +2,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+	.leanscroll::-webkit-scrollbar {
+		width: 8px;
+		margin-left: 10px;
+	}
+	.leanscroll::-webkit-scrollbar-thumb {
+		background: #d4d4d8;
+		border-radius: 2px;
+	}
+}

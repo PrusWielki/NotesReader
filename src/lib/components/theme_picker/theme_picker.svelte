@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
+	import { themes } from '$lib/consts/consts';
 	let className: string;
 
 	export { className as class };
@@ -15,8 +16,6 @@
 		let documentHtml = document.querySelector('html');
 		if (documentHtml) documentHtml.setAttribute('data-theme', theme);
 	}
-
-	const themes = ['light', 'dark', 'emerald', 'dim', 'nord', 'dracula', 'fantasy'];
 </script>
 
 <div class={`dropdown dropdown-hover ${className}`}>
@@ -42,7 +41,9 @@
 			</g></svg
 		></button
 	>
-	<ul class="dropdown-content z-30 menu p-2 shadow bg-base-200 rounded-box w-fit">
+	<ul
+		class="dropdown-content z-30 menu p-2 shadow bg-base-200 rounded-box w-fit overflow-x-hidden overflow-y-auto leanscroll flex-nowrap max-h-[50vh]"
+	>
 		{#each themes as themeName}
 			<li>
 				<button
