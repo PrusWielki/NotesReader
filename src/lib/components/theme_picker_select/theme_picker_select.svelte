@@ -20,9 +20,9 @@
 	let selectedTheme = theme;
 </script>
 
-<div class="relative w-full h-full btn btn-neutral btn-ghost btn-sm">
+<div class="relative w-full h-full btn btn-neutral btn-ghost btn-sm active:focus:scale-100  active:hover:scale-100">
 	<select
-		class={`appearance-none absolute btn w-full h-full  btn-neutral btn-ghost btn-sm ${className}`}
+		class={`appearance-none absolute btn w-full h-full  btn-neutral btn-ghost btn-sm active:focus:scale-100  active:hover:scale-100 ${className}`}
 		bind:value={selectedTheme}
 		on:change={() => {
 			if (selectedTheme) onThemeSelect(selectedTheme);
