@@ -1,13 +1,17 @@
 <script lang="ts">
-	import { getStorage, ref, getBytes } from 'firebase/storage';
+	import { getStorage, ref, getBytes, deleteObject } from 'firebase/storage';
 	import { app } from '$lib/firebase.client';
+	import { browser } from '$app/environment';
+	import { doc, deleteDoc, getFirestore } from 'firebase/firestore';
+	import { showNotification } from '$lib/hooks/show-notification';
 
-	let { text = '', open = $bindable(), summary = '', image = '' } = $props();
+	let { text = '', open = $bindable(), summary = '', image = '', docId = null } = $props();
 
 	let dialogRef: HTMLDialogElement;
 	let imageSource: any = $state(null);
 	let loading: boolean = $state(true);
 	let failed: boolean = $state(false);
+	let resultsMenu: HTMLDetailsElement;
 
 	function _arrayBufferToBase64(buffer: ArrayBuffer) {
 		var binary = '';
@@ -77,6 +81,12 @@
 			});
 		}
 	});
+	$effect(() => {
+		if (browser)
+			document.addEventListener('click', function (e) {
+				if (resultsMenu && resultsMenu.removeAttribute) resultsMenu.removeAttribute('open');
+			});
+	});
 </script>
 
 <dialog
@@ -88,7 +98,7 @@
 			on:click={() => {
 				handleCloseDialog();
 			}}
-			class="absolute cursor-pointer fill-primary w-8 h-8 right-4 top-2"
+			class="absolute cursor-pointer fill-primary w-8 h-8 right-4 top-2 btn btn-ghost p-0"
 		>
 			<svg role="button" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
 				><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g
@@ -104,6 +114,73 @@
 				</g></svg
 			>
 		</button>
+
+		<div class="absolute cursor-pointer w-6 h-6 right-5 top-14">
+			<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+			<details
+				class="dropdown dropdown-end w-full h-full"
+				on:click={(e) => {
+					if (resultsMenu.open) {
+						e.stopPropagation();
+					}
+				}}
+				on:keydown={(e) => {
+					if (resultsMenu.open) {
+						e.stopPropagation();
+					}
+				}}
+				bind:this={resultsMenu}
+			>
+				<summary tabindex="0" class="w-full fill-primary h-full btn btn-ghost p-0">
+					<svg viewBox="0 0 16 16" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg"
+						><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g
+							id="SVGRepo_tracerCarrier"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+						></g><g id="SVGRepo_iconCarrier">
+							<path
+								d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"
+							></path>
+						</g></svg
+					>
+				</summary>
+				<ul class="dropdown-content menu">
+					<li>
+						<button
+							on:click={async () => {
+								if(docId)
+								{
+									open = false;
+									handleCloseDialog();
+									let db = getFirestore();
+									deleteDoc(doc(db, 'userData', docId as string))
+										.then(() => {
+											let pathReference = null;
+											if (storage) {
+												pathReference = ref(storage, image);
+												if (pathReference) {
+													deleteObject(pathReference)
+														.then(() => {
+															showNotification('Note deleted succesfully!', 2000, 'Success');
+														})
+														.catch((error) => {
+															showNotification("Couldn't delete note!", 2000, 'Failure');
+														});
+												}
+											}
+										})
+										.catch(() => {
+											showNotification("Couldn't delete note!", 2000, 'Failure');
+										});
+								}
+							}}
+							class="btn btn-base-100 dropdown-content menu btn-small">Delete</button
+						>
+					</li>
+				</ul>
+			</details>
+		</div>
+
 		<div class="h-full overflow-auto leanscroll px-10 prose prose-h2:first-of-type:mt-0">
 			<h2>Summary</h2>
 			<p>{summary}</p>
@@ -115,7 +192,7 @@
 			{#if loading === true}
 				<p>loading...</p>
 			{:else if failed === true}
-				<p class="text-alert">failed to load the image</p>
+				<p>failed to load the image</p>
 			{:else}
 				<img src={imageSource} alt="Notes" />
 			{/if}

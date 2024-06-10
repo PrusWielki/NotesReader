@@ -25,6 +25,7 @@
 	let currentText = '';
 	let currentImage = '';
 	let currentSummary = '';
+	let currentId: string|null = null;
 	let unsubscribe: any = null;
 
 	const getData = (uid: string | null | undefined) => {
@@ -59,6 +60,7 @@
 							currentText = text;
 							currentSummary = summary;
 							currentImage = imageName;
+							currentId = doc.id;
 						}}
 						class="w-full sm:w-96"
 					>
@@ -72,6 +74,7 @@
 			summary={currentSummary}
 			image={currentImage}
 			text={currentText}
+			docId={currentId}
 		/>
 	</div>
 	<div class="fixed lg:hidden block right-6 bottom-[5lvh]">
