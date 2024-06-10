@@ -7,7 +7,7 @@
 
 	let { text = '', open = $bindable(), summary = '', image = '', docId = null } = $props();
 
-	let dialogRef: HTMLDialogElement;
+	let dialogRef: HTMLDivElement;
 	let imageSource: any = $state(null);
 	let loading: boolean = $state(true);
 	let failed: boolean = $state(false);
@@ -76,7 +76,6 @@
 					rect.left <= event.clientX &&
 					event.clientX <= rect.left + rect.width;
 				if (!isInDialog) {
-					open = false;
 					handleCloseDialog();
 				}
 			});
@@ -94,6 +93,7 @@
 	class={`fixed w-[100vw] h-[100vh]  bg-black-200 z-20 left-0 top-0 opacity-60 backdrop-blur-lg ${open ? 'block' : 'hidden'}`}
 ></div>
 <div
+	bind:this={dialogRef}
 	class={`bg-base-300 sm:h-3/4 h-full sm:max-w-2xl rounded-box w-full sm:w-3/4 h-full sm:h-3/4 fixed left-1/2 top-1/2 -translate-x-1/2 z-30 -translate-y-1/2 ${open ? 'block' : 'hidden'}`}
 >
 	<div class="relative w-full h-full py-10">
