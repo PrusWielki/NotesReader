@@ -67,8 +67,8 @@
 	});
 
 	$effect(() => {
-		if (dialogRef) {
-			dialogRef.addEventListener('click', function (event) {
+		if (dialogRef && window) {
+			window.addEventListener('click', function (event) {
 				var rect = dialogRef.getBoundingClientRect();
 				var isInDialog =
 					rect.top <= event.clientY &&
