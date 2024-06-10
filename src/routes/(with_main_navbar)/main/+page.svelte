@@ -78,6 +78,6 @@
 		/>
 	</div>
 	<div class="fixed lg:hidden block right-6 bottom-[5lvh]">
-		<PlusButton {uid} />
+		<PlusButton/>
 	</div>
 </div>
