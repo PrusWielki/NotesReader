@@ -78,7 +78,7 @@
 						</li>
 					</ul>
 				</details>
-				<a href="/" class="btn btn-ghost text-xl font-semibold">Notes Reader</a>
+				<a href="/main" class="btn btn-ghost text-xl font-semibold">Notes Reader</a>
 				<!-- 				<input
 					class="input input-bordered input-secondary block lg:hidden"
 					placeholder="search..."

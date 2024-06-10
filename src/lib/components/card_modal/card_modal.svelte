@@ -43,17 +43,17 @@
 
 	const handleOpenDialog = () => {
 		document.getElementsByTagName('body')[0].style.overflow = 'hidden';
-		dialogRef.showModal();
+		open = true;
 	};
 	const handleCloseDialog = () => {
 		document.getElementsByTagName('body')[0].style.overflow = 'auto';
-		dialogRef.close();
+		open = false;
 	};
 	$effect(() => {
 		open;
 		imageSource = null;
 		loading = true;
-		open=true
+
 		if (image) getImage(image);
 	});
 
@@ -90,11 +90,13 @@
 	});
 </script>
 
-<dialog
-	class="backdrop:backdrop-blur-sm bg-base-300 sm:h-3/4 h-full rounded-box"
-	bind:this={dialogRef}
+<div
+	class={`fixed w-[100vw] h-[100vh]  bg-black-200 z-20 left-0 top-0 opacity-60 backdrop-blur-lg ${open ? 'block' : 'hidden'}`}
+></div>
+<div
+	class={`bg-base-300 sm:h-3/4 h-full sm:max-w-2xl rounded-box w-full sm:w-3/4 h-full sm:h-3/4 fixed left-1/2 top-1/2 -translate-x-1/2 z-30 -translate-y-1/2 ${open ? 'block' : 'hidden'}`}
 >
-	<div class="relative w-full h-full sm:max-w-xl py-10">
+	<div class="relative w-full h-full py-10">
 		<button
 			on:click={() => {
 				handleCloseDialog();
@@ -182,7 +184,7 @@
 			</details>
 		</div>
 
-		<div class="h-full overflow-auto leanscroll px-10 prose prose-h2:first-of-type:mt-0">
+		<div class="h-full overflow-auto leanscroll px-12 prose prose-h2:first-of-type:mt-0">
 			<h2>Summary</h2>
 			<p>{summary}</p>
 			<h2>Content</h2>
@@ -199,4 +201,4 @@
 			{/if}
 		</div>
 	</div>
-</dialog>
+</div>
