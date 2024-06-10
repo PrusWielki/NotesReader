@@ -5,8 +5,8 @@ rules_version = '2';
 //    /databases/(default)/documents/users/$(request.auth.uid)).data.isAdmin;
 service firebase.storage {
   match /b/{bucket}/o {
-    match /{allPaths=**} {
-     allow read, write: if isUserAuthenticated();
+    match /{userId}/{allPaths=**} {
+     allow read, write: if isUserAuthenticated() && request.auth.uid == userId;
     }
     function isUserAuthenticated() {
       return request.auth.uid != null; 

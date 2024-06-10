@@ -53,7 +53,7 @@ export const extractText = onCall({ cors: true }, async (request) => {
 	// Save to Cloud Storage and Firstore
 
 	const fileExt = request.data.imageName.split('.').pop();
-	const filename = crypto.randomUUID() + '.' + fileExt;
+	const filename = request.auth?.uid + "/" + crypto.randomUUID() + '.' + fileExt;
 
 	const file = admin.storage().bucket().file(filename);
 	var imageBuffer = new Buffer(request.data.visionData.image.content, 'base64');
