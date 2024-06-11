@@ -56,6 +56,7 @@
 
 					<button
 						on:click={() => {
+							openModal = false;
 							openModal = true;
 							currentText = text;
 							currentSummary = summary;

@@ -8,6 +8,7 @@
 	let { text = '', open = $bindable(), summary = '', image = '', docId = null } = $props();
 
 	let dialogRef: HTMLDivElement;
+	let backdropRef: HTMLDivElement;
 	let imageSource: any = $state(null);
 	let loading: boolean = $state(true);
 	let failed: boolean = $state(false);
@@ -43,11 +44,9 @@
 
 	const handleOpenDialog = () => {
 		document.getElementsByTagName('body')[0].style.overflow = 'hidden';
-		open = true;
 	};
 	const handleCloseDialog = () => {
 		document.getElementsByTagName('body')[0].style.overflow = 'auto';
-		open = false;
 	};
 	$effect(() => {
 		open;
@@ -67,8 +66,8 @@
 	});
 
 	$effect(() => {
-		if (dialogRef && window) {
-			window.addEventListener('click', function (event) {
+		if (dialogRef && backdropRef) {
+			backdropRef.addEventListener('click', function (event) {
 				var rect = dialogRef.getBoundingClientRect();
 				var isInDialog =
 					rect.top <= event.clientY &&
@@ -76,6 +75,7 @@
 					rect.left <= event.clientX &&
 					event.clientX <= rect.left + rect.width;
 				if (!isInDialog) {
+					open = false
 					handleCloseDialog();
 				}
 			});
@@ -90,15 +90,17 @@
 </script>
 
 <div
+	bind:this={backdropRef}
 	class={`fixed w-[100vw] h-[100vh]  bg-black-200 z-20 left-0 top-0 opacity-60 backdrop-blur-lg ${open ? 'block' : 'hidden'}`}
 ></div>
 <div
 	bind:this={dialogRef}
-	class={`bg-base-300 sm:h-3/4 h-full sm:max-w-2xl rounded-box w-full sm:w-3/4 h-full sm:h-3/4 fixed left-1/2 top-1/2 -translate-x-1/2 z-30 -translate-y-1/2 ${open ? 'block' : 'hidden'}`}
+	class={`bg-base-300 sm:h-3/4 h-full sm:max-w-2xl rounded-box w-full sm:w-3/4 h-full sm:h-10/12 fixed left-1/2 top-1/2 -translate-x-1/2 z-30 -translate-y-1/2 ${open ? 'block' : 'hidden'}`}
 >
 	<div class="relative w-full h-full py-10">
 		<button
 			on:click={() => {
+				open = false
 				handleCloseDialog();
 			}}
 			class="absolute cursor-pointer fill-primary w-8 h-8 right-3 top-2 btn btn-ghost p-0"
@@ -156,7 +158,7 @@
 									open = false;
 									handleCloseDialog();
 									let db = getFirestore();
-									deleteDoc(doc(db, 'userData', docId as string))
+									await deleteDoc(doc(db, 'userData', docId as string))
 										.then(() => {
 											let pathReference = null;
 											if (storage) {
@@ -175,6 +177,7 @@
 										.catch(() => {
 											showNotification("Couldn't delete note!", 2000, 'Failure');
 										});
+									
 								}
 							}}
 							class="btn btn-base-100 dropdown-content menu btn-small">Delete</button
