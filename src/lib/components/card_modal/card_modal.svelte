@@ -184,7 +184,9 @@
 			</details>
 		</div>
 
-		<div class="h-full overflow-auto leanscroll px-12 prose prose-h2:first-of-type:mt-0">
+		<div
+			class="h-full overflow-auto leanscroll px-8 sm:px-12 prose prose-h2:first-of-type:mt-0 max-w-[100%]"
+		>
 			<h2>Summary</h2>
 			<p>{summary}</p>
 			<h2>Content</h2>
