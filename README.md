@@ -60,3 +60,14 @@ VITE_CLOUDFUNCTION_REGION = europe-west1
 9. Run `firebase experiments:enable webframeworks`
 
 10. Make sure you are on Node 20 and Run `firebase deploy`
+
+
+![Architecture](./images/image5.png "Architecture")
+
+![Main Screen](./images/notes-reader-1.png "Main Screen")
+
+![Login](./images/notes-reader-2.png "Login")
+
+![Notes Screen](./images/notes-reader-3.png "Notes Screen")
+
+![Notes Details](./images/notes-reader-4.png "Notes Details")
